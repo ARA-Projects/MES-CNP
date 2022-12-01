@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+}
+.exit {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+.logo-1 {
+    display: absolute;
+    top: 0px;
+    left: 0px;
+}
+.form {
+    margin-left: 35%;
+    margin-top: 15%;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 50px;
+    width: 30%;
+    height: 40%;
+    box-shadow: 10px 10px 5px gray;
+}
+.logo-img {
+    position: absolute;
+    height: 20%;
+    width: 3%;
+}
+.login-container {
+    background-color: darkgray;
+    height: 100vh;
+}
+.login-form {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+}
+
+.connect {
+    position: relative;
+    margin-top: -40%;
+    font-size: 2em;
+    color: #808080;
+    text-shadow: -3px 5px 10px #808080;
+}
+.button-33 {
+    position: absolute;
+    margin-top: 150%;
+    margin-left: 0%;
+    background-color: #92d050;
+    border-radius: 100px;
+    box-shadow: rgba(44, 187, 99, 0.2) 0 -25px 18px -14px inset,
+        rgba(44, 187, 99, 0.15) 0 1px 2px, rgba(44, 187, 99, 0.15) 0 2px 4px,
+        rgba(44, 187, 99, 0.15) 0 4px 8px, rgba(44, 187, 99, 0.15) 0 8px 16px,
+        rgba(44, 187, 99, 0.15) 0 16px 32px;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 250ms;
+    border: 0;
+    font-size: 16px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 125%;
+    height: 50%;
+}
+
+.button-33:hover {
+    box-shadow: rgba(44, 187, 99, 0.35) 0 -25px 18px -14px inset,
+        rgba(44, 187, 99, 0.25) 0 1px 2px, rgba(44, 187, 99, 0.25) 0 2px 4px,
+        rgba(44, 187, 99, 0.25) 0 4px 8px, rgba(44, 187, 99, 0.25) 0 8px 16px,
+        rgba(44, 187, 99, 0.25) 0 16px 32px;
+    transform: scale(1.05) rotate(-1deg);
+}
+.login-form > input {
+    color: black;
+    margin-bottom: 3%;
+    width: 200%;
+    height: 30px;
+    border: 2px solid gray;
+    box-shadow: 1px 1px 10px gray;
+}
+::placeholder {
+    color: silver;
+    text-shadow: 0.25px -0.25px silver;
+    padding-left: 1em;
+}

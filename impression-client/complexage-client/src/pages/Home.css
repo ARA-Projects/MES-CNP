@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+    user-select: none;
+    font-family: "Calibri";
+}
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: darkgray;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.text {
+    color: white;
+    font-size: 60px;
+    font-weight: bold;
+}
+.button {
+    padding: 30px 60px;
+    margin: 15px;
+}
+.textButton:hover {
+    box-shadow: 5px 5px rgb(77, 77, 77);
+}
+.textButton {
+    font-size: 20px;
+    color: white;
+    text-decoration: underline;
+    background-color: black;
+    padding: 25px;
+}
+.logo {
+    width: 50%;
+    top: 25px;
+}
+.sa {
+    padding: 7.5vh;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .logo {
+        width: 75%;
+    }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .logo {
+        width: 75%;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    .logo {
+        width: 60%;
+    }
+}

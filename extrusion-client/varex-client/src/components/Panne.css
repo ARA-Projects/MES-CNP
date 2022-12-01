@@ -1,0 +1,28 @@
+.panne-container {
+    display: flex;
+    flex-direction: column;
+    background-color: darkgray;
+    width: 70%;
+}
+.panne-container > select {
+    border: none;
+    outline: none;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    padding: 15px;
+    font-size: 14px;
+    color: black;
+    background-color: white;
+    margin: 10% 15%;
+    cursor: pointer;
+}
+.panne-valider {
+    color: black;
+    background-color: greenyellow;
+    border: none;
+    padding: 5%;
+    cursor: pointer;
+}

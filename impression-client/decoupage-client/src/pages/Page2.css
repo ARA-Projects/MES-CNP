@@ -1,0 +1,95 @@
+.page2 {
+    background-color: #b8babd;
+    height: 100vh;
+    font-size: 17px;
+    overflow: hidden;
+}
+h1 {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 200;
+    padding-bottom: 15%;
+}
+.top-middle-down {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+.top,
+.down {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+.top > div > form {
+    padding-top: 10%;
+}
+.top > div > h2 {
+    color: #0070c0;
+}
+h3 {
+    color: #0070c0;
+    text-decoration: underline;
+}
+input {
+    border-radius: 50px;
+    height: 30px;
+    width: 200px;
+    border: 0px;
+    box-shadow: 5px 5px #888888;
+}
+.down {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.down > div > img {
+    width: 600px;
+    height: 600px;
+}
+.top > div > form > label {
+    padding-right: 10px;
+}
+.div-1 > input {
+    cursor: default;
+}
+.affichage-impression {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 400px;
+}
+.affichage-complexage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 300px;
+    margin-top: 15%;
+}
+.div-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 75%;
+}
+.div-2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+}
+.affichage {
+    display: flex;
+    flex-direction: row;
+    background-color: #1234562e;
+}
+.unity {
+    border-radius: 50%;
+}
+.qte-obj {
+    margin-top: 5%;
+}

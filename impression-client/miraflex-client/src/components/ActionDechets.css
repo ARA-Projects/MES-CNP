@@ -1,0 +1,35 @@
+.alert-container {
+    background-color: darkgray;
+    width: 70%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.confirmer,
+.modifier {
+    margin: 10%;
+    height: 50px;
+}
+#outlined-basic {
+    color: black;
+}
+.div1 {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+.div2 {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: none;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
