@@ -78,3 +78,7 @@ input {
 .div-1 > input {
     cursor: default;
 }
+
+.qte-obj {
+    margin-top: 3%;
+}

@@ -78,6 +78,17 @@ const Page2 = () => {
                                 </form>
                             </div>
                             <div>
+                                <form>
+                                    <label>Référence article</label>
+                                    <input
+                                        type="number"
+                                        className="nOf"
+                                        id="Numéro d'OF"
+                                        min={0}
+                                    />
+                                </form>
+                            </div>
+                            <div>
                                 <FormControl sx={{ m: 1 }} variant="standard">
                                     <label>Qte Objectif</label>
                                     <input
