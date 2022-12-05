@@ -11,6 +11,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import InputBase from "@mui/material/InputBase";
+import { fetchData, fetchPHP } from "../functions/functions";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
@@ -45,11 +46,128 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+let preData = {
+    N_OF: "",
+    qt_ob: 0,
+    qt_ob_unit: "METER",
+    Epaisseur: 0,
+    Laise: 0,
+    vth: 0,
+    massev: 0,
+    alcool: "",
+    "alcool_%": 0,
+    ethoxy: "",
+    "ethoxy_%": 0,
+    acetate: "",
+    "acetate_%": 0
+}
+for(let i = 1; i <= 8; i++){
+    preData["position_"+i] = ""
+    preData["position_"+i+"_%"] = 0
+}
+
 const Page2 = () => {
+    const [data, setData] = useState(preData)
+    const [designation, setDesignation] = useState("")
     const [unity, setUnity] = React.useState("");
-    const handleChange = (event) => {
-        setUnity(event.target.value);
-    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        let link = "A_ICONS/Operator/Impression/Miraflex/Php_Pages/nouveauOF.php"
+        let result = await fetchData("/mes/getof/miraflex/"+data.N_OF, "GET")
+        if(result.success){
+            if(result.data.exists){
+                link = "A_ICONS/Operator/Impression/Miraflex/Php_Pages/modify.php"
+            }
+            result = await fetchPHP(link, data)
+            if(result == "Success@")
+            {
+                //TODO Go to page 1
+            }
+            else{
+                console.error(result)
+                window.alert("Internal error")
+            }
+        }
+        else{
+            console.error(result.error)
+            window.alert("Internal error")
+        }
+    }
+    const showInputs = () => {
+        for(let i = 1; i <= 8; i++){
+            
+            return (<>
+            <div className="div-1">
+                <label>Position {i}</label>
+                <input type={"text"}
+                    value={data["position_"+i]}
+                    onChange={(e) => {
+                        let newData = data
+                        newData["position_"+i] = e.target.value
+                        setData(newData)
+                    }}
+                    />
+            </div>
+            <div className="div-1">
+                <label>Position {i} %</label>
+                <input type={"number"}
+                    value={data["position_"+i+"_%"]}
+                    onChange={(e) => {
+                        let newData = data
+                        newData["position_"+i+"_%"] = e.target.value
+                        setData(newData)
+                    }}
+                    />
+                <label>%</label>
+            </div></>)
+        }
+    }
+    const getArticle = async () => {
+        if(designation){
+            const result = await fetchData("/mes/getarticle/miraflex/"+designation, "GET")
+            if(result.success){
+                if(result.data.exists){
+                    let newData = result.data.data
+                    for(const d in result.data.data){
+                        if(d == "id"){
+                            continue
+                        }
+                        else if(d == "vitesse"){
+                            newData.vth = newData.vitesse
+                            delete newData.vitesse
+                        }
+                        else if(d == laize){
+                            newData.Laize = newData.laize
+                            delete newData.laize
+                        }
+                        else if(d == masse_volumique_film_imprime){
+                            newData.massev = newData.masse_volumique_film_imprime
+                            delete newData.masse_volumique_film_imprime
+                        }
+                        else if(d == epaisseur_laize){
+                            newData.Epaisseur = newData.epaisseur_laize
+                            delete newData.epaisseur_laize
+                        }
+                        delete newData.id
+                        newData.qt_ob = data.qt_ob
+                        newData.qt_ob_unit = data.qt_ob_unit
+                        setData(newData)
+                    }
+                }
+                else{
+                    setData(preData)
+                }
+            }
+            else{
+                console.error(result.error)
+                window.alert("Internal error")
+            }
+        }
+        else{
+            setData(preData)
+        }
+    }
     return (
         <div className="page2">
             <div className="logo-1 col-2">
@@ -61,32 +179,35 @@ const Page2 = () => {
                     <div className="title">
                         <h1>Résultat instantané - Miraflex</h1>
                     </div>
-                    <div className="top-down">
+                    <form onSubmit={() => handleSubmit()} className="top-down">
                         <div className="top">
                             <div>
                                 <h2>Ordre de fabrication</h2>
                             </div>
                             <div>
-                                <form>
+                                <div class="form">
                                     <label>Numéro OF</label>
                                     <input
                                         type="number"
                                         className="nOf"
                                         id="Numéro d'OF"
                                         min={0}
+                                        value={data.N_OF}
+                                        onChange={(e) => setData({...data, N_OF: e.target.value})}
                                     />
-                                </form>
+                                </div>
                             </div>
                             <div>
-                                <form>
+                                <div class="form">
                                     <label>Référence article</label>
                                     <input
-                                        type="number"
+                                        type="text"
                                         className="nOf"
-                                        id="Numéro d'OF"
-                                        min={0}
+                                        id="Réference"
+                                        value={designation}
+                                        onChange={(e) => {setDesignation(e.target.value);getArticle()}}
                                     />
-                                </form>
+                                </div>
                             </div>
                             <div>
                                 <FormControl sx={{ m: 1 }} variant="standard">
@@ -94,8 +215,9 @@ const Page2 = () => {
                                     <input
                                         type="number"
                                         className="qte-obj"
-                                        id="Numéro d'OF"
                                         min={0}
+                                        value={data.qt_ob}
+                                        onChange={(e) => setData({...data, qt_ob: e.target.value})}
                                     />
                                 </FormControl>
                                 <FormControl sx={{ m: 1 }} variant="standard">
@@ -104,12 +226,12 @@ const Page2 = () => {
                                     </InputLabel>
                                     <NativeSelect
                                         id="demo-customized-select-native"
-                                        value={unity}
-                                        onChange={handleChange}
+                                        value={data.qt_ob_unit}
+                                        onChange={(e) => setData({...data, qt_ob_unit: e.target.value})}
                                         input={<BootstrapInput />}
                                     >
-                                        <option value={10}>Kg</option>
-                                        <option value={20}>m</option>
+                                        <option value={"KG"}>Kg</option>
+                                        <option value={"METER"}>m</option>
                                     </NativeSelect>
                                 </FormControl>
                             </div>
@@ -125,27 +247,88 @@ const Page2 = () => {
                             <div className="affichage">
                                 <div className="div-1">
                                     <label>Laize</label>
-                                    <input readOnly />
+                                    <input type={"number"}
+                                        value={data.Laise}
+                                        onChange={(e) => setData({...data, Laize: e.target.value})}
+                                        />
                                     <label>mm</label>
                                 </div>
                                 <div className="div-1">
                                     <label>Vitesse théorique</label>
-                                    <input readOnly />
+                                    <input type={"number"}
+                                        value={data.vth}
+                                        onChange={(e) => setData({...data, vth: e.target.value})}
+                                        />
                                     <label>m/min</label>
                                 </div>
                                 <div className="div-1">
                                     <label>Masse volumique</label>
-                                    <input readOnly />
+                                    <input type={"number"}
+                                        value={data.massev}
+                                        onChange={(e) => setData({...data, massev: e.target.value})}
+                                        />
                                     <label>Kg/cm3</label>
                                 </div>
                                 <div className="div-1">
                                     <label>Epaisseur</label>
-                                    <input readOnly />
+                                    <input type={"number"}
+                                        value={data.Epaisseur}
+                                        onChange={(e) => setData({...data, Epaisseur: e.target.value})}
+                                        />
                                     <label>um</label>
                                 </div>
+                                <div className="div-1">
+                                    <label>Alcoole</label>
+                                    <input type={"number"}
+                                        value={data.alcool}
+                                        onChange={(e) => setData({...data, alcool: e.target.value})}
+                                        />
+                                    <label>?</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Alcoole %</label>
+                                    <input type={"number"}
+                                        value={data["alcool_%"]}
+                                        onChange={(e) => setData({...data, "alcool_%": e.target.value})}
+                                        />
+                                    <label>%</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Ethoxy</label>
+                                    <input type={"number"}
+                                        value={data.ethoxy}
+                                        onChange={(e) => setData({...data, ethoxy: e.target.value})}
+                                        />
+                                    <label>?</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Ethoxy ?</label>
+                                    <input type={"number"}
+                                        value={data["ethoxy_%"]}
+                                        onChange={(e) => setData({...data, "ethoxy_%": e.target.value})}
+                                        />
+                                    <label>%</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Acetate</label>
+                                    <input type={"number"}
+                                        value={data.acetate}
+                                        onChange={(e) => setData({...data, acetate: e.target.value})}
+                                        />
+                                    <label>?</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Acetate %</label>
+                                    <input type={"number"}
+                                        value={data["acetate_%"]}
+                                        onChange={(e) => setData({...data, "acetate_%": e.target.value})}
+                                        />
+                                    <label>%</label>
+                                </div>
+                                    {showInputs()}
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div className="col-2">

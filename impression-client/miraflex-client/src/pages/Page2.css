@@ -25,7 +25,7 @@ h1 {
     width: 100%;
 }
 
-.top > div > form {
+.top > div > .form {
     padding-top: 10%;
 }
 
@@ -51,7 +51,7 @@ input {
     padding-right: 50px;
 }
 
-.top > div > form > label {
+.top > div > .form > label {
     padding-right: 10px;
 }
 
