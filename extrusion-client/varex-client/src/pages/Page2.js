@@ -6,23 +6,44 @@ import varex from "../assets/varex.png";
 import { /*useEffect,*/ useState } from "react";
 import List from "../components/List";
 import Sidebar from "../components/Sidebar";
+import { fetchPHP, fetchData } from "../functions/functions";
+
+let preData = {
+    N_OF: "",
+    debit: 0,
+}
+for(let i = 1; i <= 24; i++){
+    preData["ref"+i] = "-"
+    preData["per"+i] = 0
+    preData["lot"+i] = "-"
+}
+
+const handleSubmit = async (e) => {
+    e.preventDefault()
+    let link = "A_ICONS/Operator/Extrusion/Varex/Php_Pages/save_new_of.php"
+    let result = await fetchData("/mes/getof/varex/"+data.N_OF, "GET")
+    if(result.success){
+        if(result.data.exists){
+            link = "A_ICONS/Operator/Extrusion/Varex/Php_Pages/modify_of.php"
+        }
+        result = await fetchPHP(link, data)
+        if(result == "Success@")
+        {
+            //TODO Go to page 1
+        }
+        else{
+            console.error(result)
+            window.alert("Internal error")
+        }
+    }
+    else{
+        console.error(result.error)
+        window.alert("Internal error")
+    }
+}
 
 const Page2 = () => {
-    /*let preData = {
-        N_OF: "",
-        debit: 0,
-    };
-    const [data, setData] = useState(preData);
-    
-    useEffect(() => {
-        for (let i = 1; i <= 24; i++) {
-            preData["per" + i] = 0;
-            preData["lot" + i] = "-";
-            preData["ref" + i] = "-";
-            setData(preData);
-        }
-    }, []);
-    const finOf = async () => {};*/
+    const [data, setData] = useState(preData)
     const [showList, setShowList] = useState(false);
     function display() {
         setShowList(!showList);
@@ -38,7 +59,7 @@ const Page2 = () => {
                     <div className="title">
                         <h1>Résultat instantané - Varex</h1>
                     </div>
-                    <div className="top-down">
+                    <form className="top-down" onSubmit={(e) => handleSubmit(e)}>
                         <div className="top">
                             <div>
                                 <h2 className="of-header">
@@ -46,36 +67,31 @@ const Page2 = () => {
                                 </h2>
                             </div>
                             <div>
-                                <form>
+                                <div>
                                     <input
                                         type="number"
                                         className="nOf"
                                         id="Numéro d'OF"
                                         placeholder="Numéro d'OF"
                                         min={0}
+                                        value={data.N_OF}
+                                        onChange={(e) => setData({...data, N_OF: e.target.value})}
                                     />
-                                </form>
-                            </div>
-                            <div>
-                                <form>
-                                    <input
-                                        type="text"
-                                        id="Référence article"
-                                        placeholder="Référence article"
-                                    />
-                                </form>
+                                </div>
                             </div>
                         </div>
                         <div className="down">
                             <div>
-                                <form>
+                                <div>
                                     <input
                                         className="nth-child-1"
-                                        type="text"
+                                        type="number"
                                         id="Référence article"
                                         placeholder="Débit théorique (kg/h)"
+                                        value={data.debit}
+                                        onChange={(e) => setData({...data, debit: e.target.value})}
                                     />
-                                </form>
+                                </div>
                             </div>
                             <div>
                                 <img
@@ -93,10 +109,10 @@ const Page2 = () => {
                                         Recette
                                     </p>
                                 </div>
-                                <List display={showList} />
+                                <List display={showList} data={data} setData={setData} />
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div className="col-2">

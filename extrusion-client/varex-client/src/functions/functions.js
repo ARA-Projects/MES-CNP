@@ -58,7 +58,7 @@ export const fetchData = (url, method, body = {}) => {
         }
     });
 };
-export const fetchPHP = (url, method, body = {}) => {
+export const fetchPHP = (url, body = {}) => {
     return new Promise(async (resolve, reject) => {
         try {
             let myHeaders = new Headers();
@@ -67,25 +67,17 @@ export const fetchPHP = (url, method, body = {}) => {
                 "application/x-www-form-urlencoded; charset=UTF-8"
             );
             let requestOptions = {};
-            if (method === "GET" || method === "DELETE") {
-                requestOptions = {
-                    method: method,
-                    headers: myHeaders,
-                    redirect: "follow",
-                };
-            } else {
                 const raw = Object.entries(body)
                     .map(([k, v]) => {
                         return k + "=" + v;
                     })
                     .join("&");
                 requestOptions = {
-                    method: method,
+                    method: "POST",
                     headers: myHeaders,
                     body: raw,
                     redirect: "follow",
                 };
-            }
             const response = await fetch(
                 "http://192.168.1.51:7681" + url,
                 requestOptions

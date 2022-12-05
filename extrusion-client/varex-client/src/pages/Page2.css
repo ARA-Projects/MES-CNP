@@ -108,7 +108,7 @@ li {
 .of-header {
     color: #0070c0;
 }
-.top > div > form > input {
+.top > div > div > input {
     border-radius: 50px;
     height: 50px;
     width: 250px;
@@ -211,7 +211,7 @@ li {
     cursor: pointer;
     height: 20px;
 }
-.top-down > div > div > form > input {
+.top-down > div > div > div > input {
     outline: none;
     cursor: auto;
 }
