@@ -23,7 +23,7 @@ h1 {
     justify-content: space-around;
     width: 100%;
 }
-.top > div > form {
+.top > div > .form {
     padding-top: 10%;
 }
 .top > div > h2 {
@@ -51,7 +51,7 @@ input {
     width: 600px;
     height: 600px;
 }
-.top > div > form > label {
+.top > div > .form > label {
     padding-right: 10px;
 }
 .div-1 > input {

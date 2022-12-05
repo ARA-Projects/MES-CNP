@@ -4,7 +4,7 @@ import leave from "../assets/leave.png";
 import { Link } from "react-router-dom";
 import decoupe from "../assets/decoupe.png";
 import Sidebar from "../components/Sidebar";
-/*m*/
+import { fetchData, fetchPHP } from "../functions/functions";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import InputLabel from "@mui/material/InputLabel";
@@ -44,12 +44,117 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
+let preData = {
+    N_OF: "",
+    qt_ob: 0,
+    qt_ob_unit: "METER",
+    vitesse: 0,
+    epaisseur: 0,
+    laise: 0,
+    masse_volume: 0,
+    epaisseur_comp: 0,
+    laise_comp: 0,
+    masse_volume_comp: 0,
+    dechet_droit: 0,
+    dechet_gauche: 0,
+    nbr_bobine: 0
+}
 
 const Page2 = () => {
-    const [unity, setUnity] = React.useState("");
-    const handleChange = (event) => {
-        setUnity(event.target.value);
-    };
+    const [data, setData] = useState(preData)
+    const [designation, setDesignation] = useState("")
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        let link = "A_ICONS/Operator/Impression/Decoupage/Php_Pages/nouveauOF.php"
+        let result = await fetchData("/mes/getof/decoupage/"+data.N_OF, "GET")
+        if(result.success){
+            if(result.data.exists){
+                link = "A_ICONS/Operator/Impression/Decoupage/Php_Pages/modify.php"
+            }
+            result = await fetchPHP(link, data)
+            if(result == "Success@")
+            {
+                //TODO Go to page 1
+            }
+            else{
+                console.error(result)
+                window.alert("Internal error")
+            }
+        }
+        else{
+            console.error(result.error)
+            window.alert("Internal error")
+        }
+    }
+    const getArticle = async (value) => {
+        if(designation){
+            const result = await fetchData("/mes/getarticle/decoupage/"+value, "GET")
+            if(result.success){
+                if(result.data.exists){
+                    let newData = result.data.data
+                    for(const d in result.data.data){
+                        if(d == "id"){
+                            delete newData.id
+                            continue
+                        }
+                        else if(d == "largeur_ruban"){
+                            newData.dechet_droit = largeur_ruban / 2
+                            newData.dechet_gauche = largeur_ruban / 2
+                            delete newData.largeur_ruban
+                        }
+                        else{
+                            newData.qt_ob = data.qt_ob
+                            newData.qt_ob_unit = data.qt_ob_unit
+                            newData.nbr_bobine = data.nbr_bobine
+                        }
+                    }
+                    setData(newData)
+                }
+                else{
+                    setData(preData)
+                }
+            }
+            else{
+                console.error(result.error)
+                window.alert("Internal error")
+            }
+        }
+        else{
+            setData(preData)
+        }
+    }
+    const getOF = async (value) => {
+        if(designation){
+            const result = await fetchData("/mes/getof/decoupage/"+value, "GET")
+            if(result.success){
+                if(result.data.exists){
+                    let newData = result.data.data
+                    for(const d in result.data.data){
+                        if(d == "id"){
+                            delete newData.id
+                            continue
+                        }
+                        else if(d == "enprod"){
+                            delete newData.enprod
+                            continue
+                        }
+                    }
+                    setData(newData)
+                }
+                else{
+                    setData(preData)
+                }
+            }
+            else{
+                console.error(result.error)
+                window.alert("Internal error")
+            }
+        }
+        else{
+            setData(preData)
+        }
+    }
     return (
         <div className="page2">
             <div className="logo-1 col-2">
@@ -61,32 +166,38 @@ const Page2 = () => {
                     <div className="title">
                         <h1>Résultat instantané - Découpage</h1>
                     </div>
-                    <div className="top-middle-down">
+                    <form onSubmit={() => handleSubmit()} className="top-down">
                         <div className="top">
                             <div>
                                 <h2>Ordre de fabrication</h2>
                             </div>
                             <div>
-                                <form>
+                                <div class="form">
                                     <label>Numéro OF</label>
                                     <input
                                         type="number"
                                         className="nOf"
                                         id="Numéro d'OF"
                                         min={0}
+                                        value={data.N_OF}
+                                        onChange={(e) => {
+                                            setData({...data, N_OF: e.target.value})
+                                            getOF(e.target.value)
+                                        }}
                                     />
-                                </form>
+                                </div>
                             </div>
                             <div>
-                                <form>
+                                <div class="form">
                                     <label>Référence article</label>
                                     <input
-                                        type="number"
+                                        type="text"
                                         className="nOf"
-                                        id="Numéro d'OF"
-                                        min={0}
+                                        id="Réference"
+                                        value={designation}
+                                        onChange={(e) => {setDesignation(e.target.value);getArticle(e.target.value)}}
                                     />
-                                </form>
+                                </div>
                             </div>
                             <div>
                                 <FormControl sx={{ m: 1 }} variant="standard">
@@ -94,8 +205,9 @@ const Page2 = () => {
                                     <input
                                         type="number"
                                         className="qte-obj"
-                                        id="Numéro d'OF"
                                         min={0}
+                                        value={data.qt_ob}
+                                        onChange={(e) => setData({...data, qt_ob: e.target.value})}
                                     />
                                 </FormControl>
                                 <FormControl sx={{ m: 1 }} variant="standard">
@@ -104,67 +216,83 @@ const Page2 = () => {
                                     </InputLabel>
                                     <NativeSelect
                                         id="demo-customized-select-native"
-                                        value={unity}
-                                        onChange={handleChange}
+                                        value={data.qt_ob_unit}
+                                        onChange={(e) => setData({...data, qt_ob_unit: e.target.value})}
                                         input={<BootstrapInput />}
                                     >
-                                        <option value={10}>Kg</option>
-                                        <option value={20}>m</option>
+                                        <option value={"KG"}>Kg</option>
+                                        <option value={"METER"}>m</option>
                                     </NativeSelect>
                                 </FormControl>
                             </div>
                         </div>
                         <div className="down">
-                            <div className="affichage">
-                                <div className="affichage-impression">
-                                    <h3>Bobine mère</h3>
-                                    <div className="div-1">
-                                        <label>Epaisseur Laize</label>
-                                        <input readOnly />
-                                        <label>um</label>
-                                    </div>
-                                    <div className="div-1">
-                                        <label>Largeur Laize</label>
-                                        <input readOnly />
-                                        <label>mm</label>
-                                    </div>
-                                    <div className="div-1">
-                                        <label>Masse volumique</label>
-                                        <input readOnly />
-                                        <label>Kg/cm3</label>
-                                    </div>
-                                    <div className="div-1">
-                                        <label>Vitesse théorique</label>
-                                        <input readOnly />
-                                        <label>m/min</label>
-                                    </div>
-                                </div>
-                                <div className="affichage-complexage">
-                                    <div className="div-2">
-                                        <label>Nbre de pistes</label>
-                                        <input readOnly />
-                                    </div>
-                                    <div className="div-2">
-                                        <label>Déchet ruban droit</label>
-                                        <input readOnly />
-                                        <label>mm</label>
-                                    </div>
-                                    <div className="div-2">
-                                        <label>Déchet ruban gauche</label>
-                                        <input readOnly />
-                                        <label>mm</label>
-                                    </div>
-                                </div>
-                            </div>
                             <div>
                                 <img
                                     className="machine"
                                     src={decoupe}
-                                    alt="decoupe"
+                                    alt="decoupage"
                                 />
                             </div>
+                            <div className="affichage">
+                                <div className="div-1">
+                                    <label>Vitesse théorique</label>
+                                    <input type={"number"}
+                                        value={data.vitesse}
+                                        onChange={(e) => setData({...data, vitesse: e.target.value})}
+                                        />
+                                    <label>m/min</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Laize</label>
+                                    <input type={"number"}
+                                        value={data.laize}
+                                        onChange={(e) => setData({...data, laize: e.target.value})}
+                                        />
+                                    <label>mm</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Masse volumique</label>
+                                    <input type={"number"}
+                                        value={data.masse_volume}
+                                        onChange={(e) => setData({...data, masse_volume: e.target.value})}
+                                        />
+                                    <label>Kg/cm3</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Epaisseur</label>
+                                    <input type={"number"}
+                                        value={data.epaisseur}
+                                        onChange={(e) => setData({...data, epaisseur: e.target.value})}
+                                        />
+                                    <label>um</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Dechet Droit</label>
+                                    <input type={"number"}
+                                        value={data.dechet_droit}
+                                        onChange={(e) => setData({...data, dechet_droit: e.target.value})}
+                                        />
+                                    <label>mm</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Dechet Gauche</label>
+                                    <input type={"number"}
+                                        value={data.dechet_gauche}
+                                        onChange={(e) => setData({...data, dechet_gauche: e.target.value})}
+                                        />
+                                    <label>mm</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Nombre de bobine</label>
+                                    <input type={"number"}
+                                        value={data.nbr_bobine}
+                                        onChange={(e) => setData({...data, nbr_bobine: e.target.value})}
+                                        />
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div className="col-2">

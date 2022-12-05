@@ -149,10 +149,12 @@ const Page2 = () => {
                             newData.Epaisseur = newData.epaisseur
                             delete newData.epaisseur
                         }
-                        newData.qt_ob = data.qt_ob
-                        newData.qt_ob_unit = data.qt_ob_unit
-                        setData(newData)
+                        else{
+                            newData.qt_ob = data.qt_ob
+                            newData.qt_ob_unit = data.qt_ob_unit
+                        }
                     }
+                    setData(newData)
                 }
                 else{
                     setData(preData)
@@ -198,8 +200,8 @@ const Page2 = () => {
                             newData.Epaisseur = newData.epaisseur
                             delete newData.epaisseur
                         }
-                        setData(newData)
                     }
+                    setData(newData)
                 }
                 else{
                     setData(preData)

@@ -4,7 +4,7 @@ import leave from "../assets/leave.png";
 import { Link } from "react-router-dom";
 import complexage from "../assets/complexage.png";
 import Sidebar from "../components/Sidebar";
-
+import { fetchData, fetchPHP } from "../functions/functions";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import InputLabel from "@mui/material/InputLabel";
@@ -96,10 +96,12 @@ const Page2 = () => {
                             delete newData.id
                             continue
                         }
-                        newData.qt_ob = data.qt_ob
-                        newData.qt_ob_unit = data.qt_ob_unit
-                        setData(newData)
+                        else{
+                            newData.qt_ob = data.qt_ob
+                            newData.qt_ob_unit = data.qt_ob_unit
+                        }
                     }
+                    setData(newData)
                 }
                 else{
                     setData(preData)
@@ -116,7 +118,7 @@ const Page2 = () => {
     }
     const getOF = async (value) => {
         if(designation){
-            const result = await fetchData("/mes/getof/miraflex/"+value, "GET")
+            const result = await fetchData("/mes/getof/complexage/"+value, "GET")
             if(result.success){
                 if(result.data.exists){
                     let newData = result.data.data
@@ -129,8 +131,8 @@ const Page2 = () => {
                             delete newData.enprod
                             continue
                         }
-                        setData(newData)
                     }
+                    setData(newData)
                 }
                 else{
                     setData(preData)
