@@ -44,12 +44,107 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
+let preData = {
+    N_OF: "",
+    qt_ob: 0,
+    qt_ob_unit: "METER",
+    vitesse: 0,
+    epaisseur: 0,
+    laise: 0,
+    masse_volume: 0,
+    epaisseur_comp: 0,
+    laise_comp: 0,
+    masse_volume_comp: 0,
+    colle: 0
+}
 
 const Page2 = () => {
-    const [unity, setUnity] = React.useState("");
-    const handleChange = (event) => {
-        setUnity(event.target.value);
-    };
+    const [data, setData] = useState(preData)
+    const [designation, setDesignation] = useState("")
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        let link = "A_ICONS/Operator/Impression/Complexage/Php_Pages/nouveauOF.php"
+        let result = await fetchData("/mes/getof/complexage/"+data.N_OF, "GET")
+        if(result.success){
+            if(result.data.exists){
+                link = "A_ICONS/Operator/Impression/Complexage/Php_Pages/modify.php"
+            }
+            result = await fetchPHP(link, data)
+            if(result == "Success@")
+            {
+                //TODO Go to page 1
+            }
+            else{
+                console.error(result)
+                window.alert("Internal error")
+            }
+        }
+        else{
+            console.error(result.error)
+            window.alert("Internal error")
+        }
+    }
+    const getArticle = async (value) => {
+        if(designation){
+            const result = await fetchData("/mes/getarticle/complexage/"+value, "GET")
+            if(result.success){
+                if(result.data.exists){
+                    let newData = result.data.data
+                    for(const d in result.data.data){
+                        if(d == "id"){
+                            delete newData.id
+                            continue
+                        }
+                        newData.qt_ob = data.qt_ob
+                        newData.qt_ob_unit = data.qt_ob_unit
+                        setData(newData)
+                    }
+                }
+                else{
+                    setData(preData)
+                }
+            }
+            else{
+                console.error(result.error)
+                window.alert("Internal error")
+            }
+        }
+        else{
+            setData(preData)
+        }
+    }
+    const getOF = async (value) => {
+        if(designation){
+            const result = await fetchData("/mes/getof/miraflex/"+value, "GET")
+            if(result.success){
+                if(result.data.exists){
+                    let newData = result.data.data
+                    for(const d in result.data.data){
+                        if(d == "id"){
+                            delete newData.id
+                            continue
+                        }
+                        else if(d == "enprod"){
+                            delete newData.enprod
+                            continue
+                        }
+                        setData(newData)
+                    }
+                }
+                else{
+                    setData(preData)
+                }
+            }
+            else{
+                console.error(result.error)
+                window.alert("Internal error")
+            }
+        }
+        else{
+            setData(preData)
+        }
+    }
     return (
         <div className="page2">
             <div className="logo-1 col-2">
@@ -61,32 +156,38 @@ const Page2 = () => {
                     <div className="title">
                         <h1>Résultat instantané - Complexage</h1>
                     </div>
-                    <div className="top-middle-down">
+                    <form onSubmit={() => handleSubmit()} className="top-down">
                         <div className="top">
                             <div>
                                 <h2>Ordre de fabrication</h2>
                             </div>
                             <div>
-                                <form>
+                                <div class="form">
                                     <label>Numéro OF</label>
                                     <input
                                         type="number"
                                         className="nOf"
                                         id="Numéro d'OF"
                                         min={0}
+                                        value={data.N_OF}
+                                        onChange={(e) => {
+                                            setData({...data, N_OF: e.target.value})
+                                            getOF(e.target.value)
+                                        }}
                                     />
-                                </form>
+                                </div>
                             </div>
                             <div>
-                                <form>
+                                <div class="form">
                                     <label>Référence article</label>
                                     <input
-                                        type="number"
+                                        type="text"
                                         className="nOf"
-                                        id="Numéro d'OF"
-                                        min={0}
+                                        id="Réference"
+                                        value={designation}
+                                        onChange={(e) => {setDesignation(e.target.value);getArticle(e.target.value)}}
                                     />
-                                </form>
+                                </div>
                             </div>
                             <div>
                                 <FormControl sx={{ m: 1 }} variant="standard">
@@ -94,8 +195,9 @@ const Page2 = () => {
                                     <input
                                         type="number"
                                         className="qte-obj"
-                                        id="Numéro d'OF"
                                         min={0}
+                                        value={data.qt_ob}
+                                        onChange={(e) => setData({...data, qt_ob: e.target.value})}
                                     />
                                 </FormControl>
                                 <FormControl sx={{ m: 1 }} variant="standard">
@@ -104,40 +206,17 @@ const Page2 = () => {
                                     </InputLabel>
                                     <NativeSelect
                                         id="demo-customized-select-native"
-                                        value={unity}
-                                        onChange={handleChange}
+                                        value={data.qt_ob_unit}
+                                        onChange={(e) => setData({...data, qt_ob_unit: e.target.value})}
                                         input={<BootstrapInput />}
                                     >
-                                        <option value={10}>Kg</option>
-                                        <option value={20}>m</option>
+                                        <option value={"KG"}>Kg</option>
+                                        <option value={"METER"}>m</option>
                                     </NativeSelect>
                                 </FormControl>
                             </div>
                         </div>
-                        <div className="middle">
-                            <div className="affichage-impression">
-                                <h3>Bobine d'impression</h3>
-                                <div className="div-1">
-                                    <label>Epaisseur Laize</label>
-                                    <input readOnly />
-                                    <label>um</label>
-                                </div>
-                                <div className="div-1">
-                                    <label>Largeur Laize</label>
-                                    <input readOnly />
-                                    <label>mm</label>
-                                </div>
-                                <div className="div-1">
-                                    <label>Masse volumique</label>
-                                    <input readOnly />
-                                    <label>Kg/cm3</label>
-                                </div>
-                                <div className="div-1">
-                                    <label>Grammage colle</label>
-                                    <input readOnly />
-                                    <label>g/m2</label>
-                                </div>
-                            </div>
+                        <div className="down">
                             <div>
                                 <img
                                     className="machine"
@@ -145,30 +224,66 @@ const Page2 = () => {
                                     alt="complexage"
                                 />
                             </div>
-                            <div className="affichage-complexage">
-                                <h3>Bobine de complexage</h3>
-                                <div className="div-2">
-                                    <label>Epaisseur Laize</label>
-                                    <input readOnly />
-                                    <label>um</label>
+                            <div className="affichage">
+                                <div className="div-1">
+                                    <label>Vitesse théorique</label>
+                                    <input type={"number"}
+                                        value={data.vitesse}
+                                        onChange={(e) => setData({...data, vitesse: e.target.value})}
+                                        />
+                                    <label>m/min</label>
                                 </div>
-                                <div className="div-2">
-                                    <label>Largeur Laize</label>
-                                    <input readOnly />
+                                <div className="div-1">
+                                    <label>Laize</label>
+                                    <input type={"number"}
+                                        value={data.laize}
+                                        onChange={(e) => setData({...data, laize: e.target.value})}
+                                        />
                                     <label>mm</label>
                                 </div>
-                                <div className="div-2">
+                                <div className="div-1">
                                     <label>Masse volumique</label>
-                                    <input readOnly />
+                                    <input type={"number"}
+                                        value={data.masse_volume}
+                                        onChange={(e) => setData({...data, masse_volume: e.target.value})}
+                                        />
                                     <label>Kg/cm3</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Epaisseur</label>
+                                    <input type={"number"}
+                                        value={data.epaisseur}
+                                        onChange={(e) => setData({...data, epaisseur: e.target.value})}
+                                        />
+                                    <label>um</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Laize Complexage</label>
+                                    <input type={"number"}
+                                        value={data.laize_comp}
+                                        onChange={(e) => setData({...data, laize_comp: e.target.value})}
+                                        />
+                                    <label>mm</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Masse volumique Complexage</label>
+                                    <input type={"number"}
+                                        value={data.masse_volume_comp}
+                                        onChange={(e) => setData({...data, masse_volume_comp: e.target.value})}
+                                        />
+                                    <label>Kg/cm3</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Epaisseur Complexage</label>
+                                    <input type={"number"}
+                                        value={data.epaisseur_comp}
+                                        onChange={(e) => setData({...data, epaisseur_comp: e.target.value})}
+                                        />
+                                    <label>um</label>
                                 </div>
                             </div>
                         </div>
-                        <div className="down">
-                            <label>Vitess théorique [m/min]</label>
-                            <input readOnly />
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div className="col-2">

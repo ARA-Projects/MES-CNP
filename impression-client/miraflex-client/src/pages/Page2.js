@@ -69,7 +69,6 @@ for(let i = 1; i <= 8; i++){
 const Page2 = () => {
     const [data, setData] = useState(preData)
     const [designation, setDesignation] = useState("")
-    const [unity, setUnity] = React.useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -123,14 +122,15 @@ const Page2 = () => {
             </div></>)
         }
     }
-    const getArticle = async () => {
+    const getArticle = async (value) => {
         if(designation){
-            const result = await fetchData("/mes/getarticle/miraflex/"+designation, "GET")
+            const result = await fetchData("/mes/getarticle/miraflex/"+value, "GET")
             if(result.success){
                 if(result.data.exists){
                     let newData = result.data.data
                     for(const d in result.data.data){
                         if(d == "id"){
+                            delete newData.id
                             continue
                         }
                         else if(d == "vitesse"){
@@ -141,17 +141,63 @@ const Page2 = () => {
                             newData.Laize = newData.laize
                             delete newData.laize
                         }
-                        else if(d == masse_volumique_film_imprime){
-                            newData.massev = newData.masse_volumique_film_imprime
-                            delete newData.masse_volumique_film_imprime
+                        else if(d == masse_volume){
+                            newData.massev = newData.masse_volume
+                            delete newData.masse_volume
                         }
-                        else if(d == epaisseur_laize){
-                            newData.Epaisseur = newData.epaisseur_laize
-                            delete newData.epaisseur_laize
+                        else if(d == epaisseur){
+                            newData.Epaisseur = newData.epaisseur
+                            delete newData.epaisseur
                         }
-                        delete newData.id
                         newData.qt_ob = data.qt_ob
                         newData.qt_ob_unit = data.qt_ob_unit
+                        setData(newData)
+                    }
+                }
+                else{
+                    setData(preData)
+                }
+            }
+            else{
+                console.error(result.error)
+                window.alert("Internal error")
+            }
+        }
+        else{
+            setData(preData)
+        }
+    }
+    const getOF = async (value) => {
+        if(designation){
+            const result = await fetchData("/mes/getof/miraflex/"+value, "GET")
+            if(result.success){
+                if(result.data.exists){
+                    let newData = result.data.data
+                    for(const d in result.data.data){
+                        if(d == "id"){
+                            delete newData.id
+                            continue
+                        }
+                        else if(d == "enprod"){
+                            delete newData.enprod
+                            continue
+                        }
+                        else if(d == "vitesse"){
+                            newData.vth = newData.vitesse
+                            delete newData.vitesse
+                        }
+                        else if(d == laize){
+                            newData.Laize = newData.laize
+                            delete newData.laize
+                        }
+                        else if(d == masse_volume){
+                            newData.massev = newData.masse_volume
+                            delete newData.masse_volume
+                        }
+                        else if(d == epaisseur){
+                            newData.Epaisseur = newData.epaisseur
+                            delete newData.epaisseur
+                        }
                         setData(newData)
                     }
                 }
@@ -193,7 +239,10 @@ const Page2 = () => {
                                         id="Numéro d'OF"
                                         min={0}
                                         value={data.N_OF}
-                                        onChange={(e) => setData({...data, N_OF: e.target.value})}
+                                        onChange={(e) => {
+                                            setData({...data, N_OF: e.target.value})
+                                            getOF(e.target.value)
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -205,7 +254,7 @@ const Page2 = () => {
                                         className="nOf"
                                         id="Réference"
                                         value={designation}
-                                        onChange={(e) => {setDesignation(e.target.value);getArticle()}}
+                                        onChange={(e) => {setDesignation(e.target.value);getArticle(e.target.value)}}
                                     />
                                 </div>
                             </div>
