@@ -49,7 +49,7 @@ export const fetchData = (url, method, body = {}) => {
                 };
             }
             const response = await fetch(
-                "http://localhost:5000" + url,
+                "http://192.168.0.204:5000" + url,
                 requestOptions
             );
             resolve(await response.json());
@@ -58,7 +58,7 @@ export const fetchData = (url, method, body = {}) => {
         }
     });
 };
-export const fetchPHP = (url, method, body = {}) => {
+export const fetchPHP = (url, body = {}) => {
     return new Promise(async (resolve, reject) => {
         try {
             let myHeaders = new Headers();
@@ -67,27 +67,19 @@ export const fetchPHP = (url, method, body = {}) => {
                 "application/x-www-form-urlencoded; charset=UTF-8"
             );
             let requestOptions = {};
-            if (method === "GET" || method === "DELETE") {
-                requestOptions = {
-                    method: method,
-                    headers: myHeaders,
-                    redirect: "follow",
-                };
-            } else {
-                const raw = Object.entries(body)
-                    .map(([k, v]) => {
-                        return k + "=" + v;
-                    })
-                    .join("&");
-                requestOptions = {
-                    method: method,
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: "follow",
-                };
-            }
+            const raw = Object.entries(body)
+                .map(([k, v]) => {
+                    return k + "=" + v;
+                })
+                .join("&");
+            requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow",
+            };
             const response = await fetch(
-                "http://192.168.1.51:7681" + url,
+                "http://192.168.0.204:7681" + url,
                 requestOptions
             );
             resolve(await response.text());

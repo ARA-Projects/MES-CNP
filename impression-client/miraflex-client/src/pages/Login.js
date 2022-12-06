@@ -19,10 +19,10 @@ const Login = () => {
                 navigate("/Page1");
             } else {
                 window.alert("Wrong login");
-                console.error(fetchedData.error);
             }
         } else {
             window.alert("Enter your credentials");
+            console.error(fetchedData.error);
         }
     };
     const checkUser = async () => {

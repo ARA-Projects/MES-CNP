@@ -125,7 +125,7 @@ const Page2 = () => {
                         <div className="down">
                             <div>
                                 <div>
-                                    <label>Débit th</label>
+                                    <label className="dt">Débit th</label>
                                     <input
                                         className="nth-child-1"
                                         type="number"
