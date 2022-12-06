@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { currentDate, currentTime, fetchData } from "../functions/functions";
+import {
+    currentDate,
+    currentTime,
+    fetchData,
+    fetchPHP,
+} from "../functions/functions";
 import "../pages/Page1.css";
 import "./Sidebar.css";
 import cms from "../assets/cms.png";
@@ -54,6 +59,18 @@ const Sidebar = () => {
             }
         }, 1000);
     }, []);
+    const finOF = async () => {
+        const result = await fetchPHP(
+            "/A_ICONS/Operator/Extrusion/Varex/Php_Pages/fin_of.php",
+            { fin_of: true }
+        );
+        if (result === "Success@") {
+            window.alert("Fin OF");
+        } else {
+            window.alert("Internal Error");
+            console.error(result);
+        }
+    };
     return (
         <div className="sidebar">
             <img className="cms-img" src={cms} alt="cms" />
@@ -97,7 +114,7 @@ const Sidebar = () => {
                 </div>
             </ul>
             <div className="buttons">
-                <button>Fin OF</button>
+                <button onClick={() => finOF()}>Fin OF</button>
             </div>
         </div>
     );

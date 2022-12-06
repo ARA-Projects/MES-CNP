@@ -3,7 +3,7 @@ import homepicrot from "../assets/homepicrot.png";
 import leave from "../assets/leave.png";
 import { Link } from "react-router-dom";
 import varex from "../assets/varex.png";
-import { /*useEffect,*/ useState } from "react";
+import { /*useEffect,*/ useEffect, useState } from "react";
 import List from "../components/List";
 import Sidebar from "../components/Sidebar";
 import { fetchPHP, fetchData } from "../functions/functions";
@@ -27,12 +27,13 @@ const Page2 = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let link = "A_ICONS/Operator/Extrusion/Varex/Php_Pages/save_new_of.php";
+        let link =
+            "/A_ICONS/Operator/Extrusion/Varex/Php_Pages/save_new_of.php";
         let result = await fetchData("/mes/getof/varex/" + data.N_OF, "GET");
         if (result.success) {
             if (result.data.exists) {
                 link =
-                    "A_ICONS/Operator/Extrusion/Varex/Php_Pages/modify_of.php";
+                    "/A_ICONS/Operator/Extrusion/Varex/Php_Pages/modify_of.php";
             }
             result = await fetchPHP(link, data);
             if (result === "Success@") {
@@ -47,36 +48,39 @@ const Page2 = () => {
         }
     };
     const getOF = async (value) => {
-        if(designation){
-            const result = await fetchData("/mes/getof/varex/"+value, "GET")
-            if(result.success){
-                if(result.data.exists){
-                    let newData = result.data.data
-                    for(const d in result.data.data){
-                        if(d == "id"){
-                            delete newData.id
-                            continue
-                        }
-                        else if(d == "enprod"){
-                            delete newData.enprod
-                            continue
+        if (value) {
+            const result = await fetchData("/mes/getof/varex/" + value, "GET");
+            if (result.success) {
+                if (result.data.exists) {
+                    let newData = result.data.data;
+                    for (const d in result.data.data) {
+                        if (d === "id") {
+                            delete newData.id;
+                            continue;
+                        } else if (d === "enprod") {
+                            delete newData.enprod;
+                            continue;
+                        } else if (d === "pause") {
+                            delete newData.pause;
+                            continue;
+                        } else if (d.substring(0, 4) === "comp") {
+                            newData[d.replace("comp", "ref")] = newData[d];
+                            delete newData[d];
+                        } else if (d.substring(0, 6) === "p_comp") {
+                            newData[d.replace("p_comp", "per")] = newData[d];
+                            delete newData[d];
                         }
                     }
-                    setData(newData)
+                    setData(newData);
                 }
-                else{
-                    setData(preData)
-                }
+            } else {
+                console.error(result.error);
+                window.alert("Internal error");
             }
-            else{
-                console.error(result.error)
-                window.alert("Internal error")
-            }
+        } else {
+            setData(preData);
         }
-        else{
-            setData(preData)
-        }
-    }
+    };
     return (
         <div className="page2">
             <div className="logo-1 col-2">
@@ -107,12 +111,13 @@ const Page2 = () => {
                                         placeholder="Numéro d'OF"
                                         min={0}
                                         value={data.N_OF}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
+                                            getOF(e.target.value);
                                             setData({
                                                 ...data,
                                                 N_OF: e.target.value,
-                                            })
-                                        }
+                                            });
+                                        }}
                                     />
                                 </div>
                             </div>
