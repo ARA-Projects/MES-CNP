@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { currentDate, currentTime, fetchData } from "../functions/functions";
 import "../pages/Page1.css";
+import "./Sidebar.css";
 import cms from "../assets/cms.png";
 
 const Sidebar = () => {
@@ -95,6 +96,9 @@ const Sidebar = () => {
                     </li>
                 </div>
             </ul>
+            <div className="buttons">
+                <button>Fin OF</button>
+            </div>
         </div>
     );
 };
