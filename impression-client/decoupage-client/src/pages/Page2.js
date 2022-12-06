@@ -125,7 +125,7 @@ const Page2 = () => {
         }
     }
     const getOF = async (value) => {
-        if(designation){
+        if(value){
             const result = await fetchData("/mes/getof/decoupage/"+value, "GET")
             if(result.success){
                 if(result.data.exists){

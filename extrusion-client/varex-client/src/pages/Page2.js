@@ -46,6 +46,37 @@ const Page2 = () => {
             window.alert("Internal error");
         }
     };
+    const getOF = async (value) => {
+        if(designation){
+            const result = await fetchData("/mes/getof/varex/"+value, "GET")
+            if(result.success){
+                if(result.data.exists){
+                    let newData = result.data.data
+                    for(const d in result.data.data){
+                        if(d == "id"){
+                            delete newData.id
+                            continue
+                        }
+                        else if(d == "enprod"){
+                            delete newData.enprod
+                            continue
+                        }
+                    }
+                    setData(newData)
+                }
+                else{
+                    setData(preData)
+                }
+            }
+            else{
+                console.error(result.error)
+                window.alert("Internal error")
+            }
+        }
+        else{
+            setData(preData)
+        }
+    }
     return (
         <div className="page2">
             <div className="logo-1 col-2">
