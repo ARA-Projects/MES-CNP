@@ -82,6 +82,7 @@ const Page2 = () => {
             window.alert("Internal error");
         }
     };
+    let inputs = [1, 2, 3, 4, 5, 6, 7, 8];
     const getArticle = async (value) => {
         if (designation) {
             const result = await fetchData(
@@ -168,6 +169,7 @@ const Page2 = () => {
     };
     return (
         <div className="page2">
+            <button onClick={() => getOF(data.N_OF)}>Rechercher OF</button>
             <div className="logo-1 col-2">
                 <img src={homepicrot} alt="logo" className="logo-img" />
             </div>
@@ -177,9 +179,6 @@ const Page2 = () => {
                     <div className="title">
                         <h1>Résultat instantané - Miraflex</h1>
                     </div>
-                    <button onClick={() => getOF(data.N_OF)}>
-                        Rechercher OF
-                    </button>
                     <form
                         onSubmit={(e) => handleSubmit(e)}
                         className="top-down"
@@ -189,7 +188,7 @@ const Page2 = () => {
                                 <h2>Ordre de fabrication</h2>
                             </div>
                             <div>
-                                <div>
+                                <div className="form">
                                     <label>Numéro OF</label>
                                     <input
                                         type="number"
@@ -207,7 +206,7 @@ const Page2 = () => {
                                 </div>
                             </div>
                             <div>
-                                <div>
+                                <div className="form">
                                     <label>Référence article</label>
                                     <input
                                         type="text"
@@ -323,8 +322,138 @@ const Page2 = () => {
                                     />
                                     <label>um</label>
                                 </div>
+                                <div className="div-1">
+                                    <label>Alcool</label>
+                                    <input
+                                        type={"text"}
+                                        value={data.alcool}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                alcool: e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>?</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Alcool %</label>
+                                    <input
+                                        type={"number"}
+                                        value={data["alcool_%"]}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                "alcool_%": e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>%</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Ethoxy</label>
+                                    <input
+                                        type={"text"}
+                                        value={data.ethoxy}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                ethoxy: e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>?</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Ethoxy ?</label>
+                                    <input
+                                        type={"number"}
+                                        value={data["ethoxy_%"]}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                "ethoxy_%": e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>%</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Acetate</label>
+                                    <input
+                                        type={"text"}
+                                        value={data.acetate}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                acetate: e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>?</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Acetate %</label>
+                                    <input
+                                        type={"number"}
+                                        value={data["acetate_%"]}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                "acetate_%": e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>%</label>
+                                </div>
+                                {inputs.map((i, key) => {
+                                    return (
+                                        <div key={key}>
+                                            <div className="div-1">
+                                                <label>Position {i}</label>
+                                                <input
+                                                    type={"text"}
+                                                    value={
+                                                        data["position_" + i]
+                                                    }
+                                                    onChange={(e) => {
+                                                        let newData = data;
+                                                        newData[
+                                                            "position_" + i
+                                                        ] = e.target.value;
+                                                        setData(newData);
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="div-1">
+                                                <label>Position {i} %</label>
+                                                <input
+                                                    type={"number"}
+                                                    value={
+                                                        data[
+                                                            "position_" +
+                                                                i +
+                                                                "_%"
+                                                        ]
+                                                    }
+                                                    onChange={(e) => {
+                                                        let newData = data;
+                                                        newData[
+                                                            "position_" +
+                                                                i +
+                                                                "_%"
+                                                        ] = e.target.value;
+                                                        setData(newData);
+                                                    }}
+                                                />
+                                                <label>%</label>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
+                        <button>Valider</button>
                     </form>
                 </div>
             </div>

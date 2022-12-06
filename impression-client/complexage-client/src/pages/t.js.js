@@ -2,16 +2,16 @@ import "./Page2.css";
 import homepicrot from "../assets/homepicrot.png";
 import leave from "../assets/leave.png";
 import { Link } from "react-router-dom";
-import miraflex from "../assets/miraflex.png";
+import complexage from "../assets/complexage.png";
 import Sidebar from "../components/Sidebar";
-import { useState } from "react";
+import { fetchData, fetchPHP } from "../functions/functions";
 import * as React from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import InputBase from "@mui/material/InputBase";
-import { fetchData, fetchPHP } from "../functions/functions";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
@@ -45,26 +45,19 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         },
     },
 }));
-
 let preData = {
     N_OF: "",
     qt_ob: 0,
     qt_ob_unit: "METER",
-    Epaisseur: 0,
-    Laise: 0,
-    vth: 0,
-    massev: 0,
-    alcool: "",
-    "alcool_%": 0,
-    ethoxy: "",
-    "ethoxy_%": 0,
-    acetate: "",
-    "acetate_%": 0,
+    vitesse: 0,
+    epaisseur: 0,
+    laise: 0,
+    masse_volume: 0,
+    epaisseur_comp: 0,
+    laise_comp: 0,
+    masse_volume_comp: 0,
+    colle: 0,
 };
-for (let i = 1; i <= 8; i++) {
-    preData["position_" + i] = "";
-    preData["position_" + i + "_%"] = 0;
-}
 
 const Page2 = () => {
     const [data, setData] = useState(preData);
@@ -73,9 +66,9 @@ const Page2 = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         let link =
-            "/A_ICONS/Operator/Impression/Miraflex/Php_Pages/nouveauOF.php";
+            "/A_ICONS/Operator/Impression/Complexage/Php_Pages/nouveauOF.php";
         let result = await fetchPHP(link, data);
-        if (result === "Success@") {
+        if (result == "Success@") {
             window.alert("YEAY");
         } else {
             console.error(result);
@@ -85,29 +78,16 @@ const Page2 = () => {
     const getArticle = async (value) => {
         if (designation) {
             const result = await fetchData(
-                "/mes/getarticle/miraflex/" + value,
+                "/mes/getarticle/complexage/" + value,
                 "GET"
             );
             if (result.success) {
                 if (result.data.exists) {
-                    console.log(result.data.data);
                     let newData = result.data.data;
                     for (const d in result.data.data) {
-                        if (d === "id") {
+                        if (d == "id") {
                             delete newData.id;
                             continue;
-                        } else if (d === "vitesse") {
-                            newData.vth = newData.vitesse;
-                            delete newData.vitesse;
-                        } else if (d === "laize") {
-                            newData.Laize = newData.laize;
-                            delete newData.laize;
-                        } else if (d === "masse_volume") {
-                            newData.massev = newData.masse_volume;
-                            delete newData.masse_volume;
-                        } else if (d === "epaisseur") {
-                            newData.Epaisseur = newData.epaisseur;
-                            delete newData.epaisseur;
                         } else {
                             newData.qt_ob = data.qt_ob;
                             newData.qt_ob_unit = data.qt_ob_unit;
@@ -128,35 +108,22 @@ const Page2 = () => {
     const getOF = async (value) => {
         if (value) {
             const result = await fetchData(
-                "/mes/getof/miraflex/" + value,
+                "/mes/getof/complexage/" + value,
                 "GET"
             );
             if (result.success) {
                 if (result.data.exists) {
                     let newData = result.data.data;
                     for (const d in result.data.data) {
-                        if (d === "id") {
+                        if (d == "id") {
                             delete newData.id;
                             continue;
-                        } else if (d === "enprod") {
+                        } else if (d == "enprod") {
                             delete newData.enprod;
                             continue;
-                        } else if (d === "vitesse") {
-                            newData.vth = newData.vitesse;
-                            delete newData.vitesse;
-                        } else if (d === "laize") {
-                            newData.Laize = newData.laize;
-                            delete newData.laize;
-                        } else if (d === "masse_volume") {
-                            newData.massev = newData.masse_volume;
-                            delete newData.masse_volume;
-                        } else if (d === "epaisseur") {
-                            newData.Epaisseur = newData.epaisseur;
-                            delete newData.epaisseur;
                         }
                     }
                     setData(newData);
-                    setDesignation("");
                 }
             } else {
                 console.error(result.error);
@@ -175,7 +142,7 @@ const Page2 = () => {
                 <Sidebar />
                 <div className="content">
                     <div className="title">
-                        <h1>Résultat instantané - Miraflex</h1>
+                        <h1>Résultat instantané - Complexage</h1>
                     </div>
                     <button onClick={() => getOF(data.N_OF)}>
                         Rechercher OF
@@ -189,7 +156,7 @@ const Page2 = () => {
                                 <h2>Ordre de fabrication</h2>
                             </div>
                             <div>
-                                <div>
+                                <div className="form">
                                     <label>Numéro OF</label>
                                     <input
                                         type="number"
@@ -207,7 +174,7 @@ const Page2 = () => {
                                 </div>
                             </div>
                             <div>
-                                <div>
+                                <div className="form">
                                     <label>Référence article</label>
                                     <input
                                         type="text"
@@ -237,73 +204,54 @@ const Page2 = () => {
                                         }
                                     />
                                 </FormControl>
-                                <FormControl sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="demo-customized-select-native">
-                                        Unité
-                                    </InputLabel>
-                                    <NativeSelect
-                                        id="demo-customized-select-native"
-                                        value={data.qt_ob_unit}
-                                        onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                qt_ob_unit: e.target.value,
-                                            })
-                                        }
-                                        input={<BootstrapInput />}
-                                    >
-                                        <option value={"KG"}>Kg</option>
-                                        <option value={"METER"}>m</option>
-                                    </NativeSelect>
-                                </FormControl>
                             </div>
                         </div>
                         <div className="down">
                             <div>
                                 <img
                                     className="machine"
-                                    src={miraflex}
-                                    alt="miraflex"
+                                    src={complexage}
+                                    alt="complexage"
                                 />
                             </div>
                             <div className="affichage">
                                 <div className="div-1">
-                                    <label>Laize</label>
-                                    <input
-                                        type={"number"}
-                                        value={data.Laize}
-                                        onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                Laize: e.target.value,
-                                            })
-                                        }
-                                    />
-                                    <label>mm</label>
-                                </div>
-                                <div className="div-1">
                                     <label>Vitesse théorique</label>
                                     <input
                                         type={"number"}
-                                        value={data.vth}
+                                        value={data.vitesse}
                                         onChange={(e) =>
                                             setData({
                                                 ...data,
-                                                vth: e.target.value,
+                                                vitesse: e.target.value,
                                             })
                                         }
                                     />
                                     <label>m/min</label>
                                 </div>
                                 <div className="div-1">
-                                    <label>Masse volumique</label>
+                                    <label>Laize</label>
                                     <input
                                         type={"number"}
-                                        value={data.massev}
+                                        value={data.laize}
                                         onChange={(e) =>
                                             setData({
                                                 ...data,
-                                                massev: e.target.value,
+                                                laize: e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>mm</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Masse volumique</label>
+                                    <input
+                                        type={"number"}
+                                        value={data.masse_volume}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                masse_volume: e.target.value,
                                             })
                                         }
                                     />
@@ -313,11 +261,68 @@ const Page2 = () => {
                                     <label>Epaisseur</label>
                                     <input
                                         type={"number"}
-                                        value={data.Epaisseur}
+                                        value={data.epaisseur}
                                         onChange={(e) =>
                                             setData({
                                                 ...data,
-                                                Epaisseur: e.target.value,
+                                                epaisseur: e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>um</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Laize Complexage</label>
+                                    <input
+                                        type={"number"}
+                                        value={data.laize_comp}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                laize_comp: e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>mm</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Masse volumique Complexage</label>
+                                    <input
+                                        type={"number"}
+                                        value={data.masse_volume_comp}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                masse_volume_comp:
+                                                    e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>Kg/cm3</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Epaisseur Complexage</label>
+                                    <input
+                                        type={"number"}
+                                        value={data.epaisseur_comp}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                epaisseur_comp: e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>um</label>
+                                </div>
+                                <div className="div-1">
+                                    <label>Colle</label>
+                                    <input
+                                        type={"number"}
+                                        value={data.colle}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                colle: e.target.value,
                                             })
                                         }
                                     />
@@ -325,6 +330,7 @@ const Page2 = () => {
                                 </div>
                             </div>
                         </div>
+                        <button>Valider</button>
                     </form>
                 </div>
             </div>

@@ -28,14 +28,15 @@ const Login = () => {
     const checkUser = async () => {
         const fetchedData = await fetchData("/mes/checkuser/varex", "GET");
         if (fetchedData.success) {
-            if (!fetchedData.data.connected) {
-                navigate("/Home");
+            if (fetchedData.data.connected) {
+                navigate("/Page1");
             }
         } else {
             console.error(fetchedData.error);
         }
     };
     useEffect(() => {
+        checkUser();
         setInterval(() => {
             checkUser();
         }, 60000);

@@ -3,7 +3,7 @@ import homepicrot from "../assets/homepicrot.png";
 import leave from "../assets/leave.png";
 import { Link } from "react-router-dom";
 import varex from "../assets/varex.png";
-import { /*useEffect,*/ useEffect, useState } from "react";
+import { useState } from "react";
 import List from "../components/List";
 import Sidebar from "../components/Sidebar";
 import { fetchPHP, fetchData } from "../functions/functions";
@@ -27,24 +27,38 @@ const Page2 = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let link =
-            "/A_ICONS/Operator/Extrusion/Varex/Php_Pages/save_new_of.php";
-        let result = await fetchData("/mes/getof/varex/" + data.N_OF, "GET");
-        if (result.success) {
-            if (result.data.exists) {
-                link =
-                    "/A_ICONS/Operator/Extrusion/Varex/Php_Pages/modify_of.php";
+        let doit = true;
+        for (const key in data) {
+            if (!data[key]) {
+                doit = false;
+                break;
             }
-            result = await fetchPHP(link, data);
-            if (result === "Success@") {
-                //TODO Go to page 1
+        }
+        if (doit) {
+            let link =
+                "/A_ICONS/Operator/Extrusion/Varex/Php_Pages/save_new_of.php";
+            let result = await fetchData(
+                "/mes/getof/varex/" + data.N_OF,
+                "GET"
+            );
+            if (result.success) {
+                if (result.data.exists) {
+                    link =
+                        "/A_ICONS/Operator/Extrusion/Varex/Php_Pages/modify_of.php";
+                }
+                result = await fetchPHP(link, data);
+                if (result === "Success@") {
+                    //TODO Go to page 1
+                } else {
+                    console.error(result);
+                    window.alert("Internal error");
+                }
             } else {
-                console.error(result);
+                console.error(result.error);
                 window.alert("Internal error");
             }
         } else {
-            console.error(result.error);
-            window.alert("Internal error");
+            window.alert("Error");
         }
     };
     const getOF = async (value) => {

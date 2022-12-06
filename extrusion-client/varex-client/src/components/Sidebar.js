@@ -46,7 +46,7 @@ const Sidebar = () => {
         }
         fetching = false;
     };
-
+    checkUser();
     useEffect(() => {
         setInterval(() => {
             setTime(currentTime());

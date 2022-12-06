@@ -1,25 +1,30 @@
 import "./DecNC.css";
 import homepicrot from "../assets/homepicrot.png";
 import leave from "../assets/leave.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import React, { useState } from "react";
 import { fetchData } from "../functions/functions";
 
 const DecNC = ({ data }) => {
+    const navigate = useNavigate();
     const [motif, setMotif] = useState("");
     const [quantite, setQuantite] = useState("");
     const saveNonConf = async () => {
-        const fetchedData = await fetchData(
-            "/mes/savenonconforme/varex",
-            "POST",
-            { quantite, motif }
-        );
-        if (fetchedData.success) {
-            window.location.reload();
+        if (quantite && motif) {
+            const fetchedData = await fetchData(
+                "/mes/savenonconforme/varex",
+                "POST",
+                { quantite, motif }
+            );
+            if (fetchedData.success) {
+                navigate("/Page1");
+            } else {
+                window.alert("Error");
+                console.error(fetchedData.error);
+            }
         } else {
             window.alert("Error");
-            console.error(fetchedData.error);
         }
     };
     return (

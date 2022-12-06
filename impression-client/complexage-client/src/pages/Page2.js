@@ -149,14 +149,14 @@ const Page2 = () => {
                     </button>
                     <form
                         onSubmit={(e) => handleSubmit(e)}
-                        className="top-down"
+                        className="top-middle-down"
                     >
                         <div className="top">
                             <div>
                                 <h2>Ordre de fabrication</h2>
                             </div>
                             <div>
-                                <div className="form">
+                                <div>
                                     <label>Numéro OF</label>
                                     <input
                                         type="number"
@@ -174,12 +174,12 @@ const Page2 = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className="form">
+                                <div>
                                     <label>Référence article</label>
                                     <input
                                         type="text"
                                         className="nOf"
-                                        id="Réference"
+                                        id="Numéro d'OF"
                                         value={designation}
                                         onChange={(e) => {
                                             setDesignation(e.target.value);
@@ -194,6 +194,7 @@ const Page2 = () => {
                                     <input
                                         type="number"
                                         className="qte-obj"
+                                        id="Numéro d'OF"
                                         min={0}
                                         value={data.qt_ob}
                                         onChange={(e) =>
@@ -206,33 +207,25 @@ const Page2 = () => {
                                 </FormControl>
                             </div>
                         </div>
-                        <div className="down">
-                            <div>
-                                <img
-                                    className="machine"
-                                    src={complexage}
-                                    alt="complexage"
-                                />
-                            </div>
-                            <div className="affichage">
+                        <div className="middle">
+                            <div className="affichage-impression">
+                                <h3>Bobine d'impression</h3>
                                 <div className="div-1">
-                                    <label>Vitesse théorique</label>
+                                    <label>Epaisseur Laize</label>
                                     <input
-                                        type={"number"}
-                                        value={data.vitesse}
+                                        value={data.epaisseur}
                                         onChange={(e) =>
                                             setData({
                                                 ...data,
-                                                vitesse: e.target.value,
+                                                epaisseur: e.target.value,
                                             })
                                         }
                                     />
-                                    <label>m/min</label>
+                                    <label>um</label>
                                 </div>
                                 <div className="div-1">
-                                    <label>Laize</label>
+                                    <label>Largeur Laize</label>
                                     <input
-                                        type={"number"}
                                         value={data.laize}
                                         onChange={(e) =>
                                             setData({
@@ -246,7 +239,6 @@ const Page2 = () => {
                                 <div className="div-1">
                                     <label>Masse volumique</label>
                                     <input
-                                        type={"number"}
                                         value={data.masse_volume}
                                         onChange={(e) =>
                                             setData({
@@ -258,21 +250,45 @@ const Page2 = () => {
                                     <label>Kg/cm3</label>
                                 </div>
                                 <div className="div-1">
-                                    <label>Epaisseur</label>
+                                    <label>Grammage colle</label>
                                     <input
                                         type={"number"}
-                                        value={data.epaisseur}
+                                        value={data.colle}
                                         onChange={(e) =>
                                             setData({
                                                 ...data,
-                                                epaisseur: e.target.value,
+                                                colle: e.target.value,
+                                            })
+                                        }
+                                    />
+                                    <label>g/m2</label>
+                                </div>
+                            </div>
+                            <div>
+                                <img
+                                    className="machine"
+                                    src={complexage}
+                                    alt="complexage"
+                                />
+                            </div>
+                            <div className="affichage-complexage">
+                                <h3>Bobine de complexage</h3>
+                                <div className="div-2">
+                                    <label>Epaisseur Laize</label>
+                                    <input
+                                        type={"number"}
+                                        value={data.epaisseur_comp}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                epaisseur_comp: e.target.value,
                                             })
                                         }
                                     />
                                     <label>um</label>
                                 </div>
-                                <div className="div-1">
-                                    <label>Laize Complexage</label>
+                                <div className="div-2">
+                                    <label>Largeur Laize</label>
                                     <input
                                         type={"number"}
                                         value={data.laize_comp}
@@ -285,8 +301,8 @@ const Page2 = () => {
                                     />
                                     <label>mm</label>
                                 </div>
-                                <div className="div-1">
-                                    <label>Masse volumique Complexage</label>
+                                <div className="div-2">
+                                    <label>Masse volumique</label>
                                     <input
                                         type={"number"}
                                         value={data.masse_volume_comp}
@@ -300,37 +316,20 @@ const Page2 = () => {
                                     />
                                     <label>Kg/cm3</label>
                                 </div>
-                                <div className="div-1">
-                                    <label>Epaisseur Complexage</label>
-                                    <input
-                                        type={"number"}
-                                        value={data.epaisseur_comp}
-                                        onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                epaisseur_comp: e.target.value,
-                                            })
-                                        }
-                                    />
-                                    <label>um</label>
-                                </div>
-                                <div className="div-1">
-                                    <label>Colle</label>
-                                    <input
-                                        type={"number"}
-                                        value={data.colle}
-                                        onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                colle: e.target.value,
-                                            })
-                                        }
-                                    />
-                                    <label>um</label>
-                                </div>
                             </div>
                         </div>
-                        <button>Valider</button>
+                        <div className="down">
+                            <label>Vitess théorique [m/min]</label>
+                            <input
+                                value={data.vitesse}
+                                onChange={(e) =>
+                                    setData({
+                                        ...data,
+                                        vitesse: e.target.value,
+                                    })
+                                }
+                            />
+                        </div>
                     </form>
                 </div>
             </div>

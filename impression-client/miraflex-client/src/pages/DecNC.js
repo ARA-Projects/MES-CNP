@@ -1,12 +1,13 @@
 import "./DecNC.css";
 import homepicrot from "../assets/homepicrot.png";
 import leave from "../assets/leave.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import React, { useState } from "react";
 import { fetchData } from "../functions/functions";
 
 const DecNC = ({ data }) => {
+    const navigate = useNavigate();
     const [motif, setMotif] = useState("");
     const [quantite, setQuantite] = useState("");
     const saveNonConf = async () => {
@@ -16,7 +17,7 @@ const DecNC = ({ data }) => {
             { quantite, motif }
         );
         if (fetchedData.success) {
-            window.location.reload();
+            navigate("/Page1");
         } else {
             window.alert("Error");
             console.error(fetchedData.error);

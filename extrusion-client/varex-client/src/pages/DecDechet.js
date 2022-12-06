@@ -1,24 +1,33 @@
 import "./DecDechet.css";
 import homepicrot from "../assets/homepicrot.png";
 import leave from "../assets/leave.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import React, { useState } from "react";
 import { fetchData } from "../functions/functions";
 
 const DecDechet = ({ data }) => {
+    const navigate = useNavigate();
     const [type, setType] = useState("");
     const [quantite, setQuantite] = useState("");
     const saveDechet = async () => {
-        const fetchedData = await fetchData("/mes/savedechet/varex", "POST", {
-            quantite,
-            type,
-        });
-        if (fetchedData.success) {
-            window.location.reload();
+        if (quantite && type) {
+            const fetchedData = await fetchData(
+                "/mes/savedechet/varex",
+                "POST",
+                {
+                    quantite,
+                    type,
+                }
+            );
+            if (fetchedData.success) {
+                navigate("/Page1");
+            } else {
+                window.alert("Error");
+                console.error(fetchedData.error);
+            }
         } else {
             window.alert("Error");
-            console.error(fetchedData.error);
         }
     };
     return (
@@ -43,15 +52,37 @@ const DecDechet = ({ data }) => {
                                 name="pannes"
                                 id="pannes"
                                 onChange={(e) => setType(e.target.value)}
-                                defaultValue={"DEFAULT"}
+                                defaultValue={""}
                             >
-                                <option value="DEFAULT" disabled>
+                                <option value="" disabled>
                                     --Choisir une option--
                                 </option>
-                                <option value="Nettoyage">Nettoyage</option>
-                                <option value="Démarrage">Démarrage</option>
-                                <option value="Changement de série">
-                                    Changement de série
+                                <option value="Dechet de changement">
+                                    Déchet de changement
+                                </option>
+                                <option value="Dechet echantillion">
+                                    Dechet echantillion
+                                </option>
+                                <option value="Dechet panne machine">
+                                    Dechet panne machine
+                                </option>
+                                <option value="Dechet coupure courant">
+                                    Dechet coupure courant
+                                </option>
+                                <option value="Dechet Probleme MP">
+                                    Dechet Probleme MP
+                                </option>
+                                <option value="Dechet Purge">
+                                    Dechet Purge
+                                </option>
+                                <option value="Dechet Ruban">
+                                    Dechet Ruban
+                                </option>
+                                <option value="Dechet Reglage">
+                                    Dechet Reglage
+                                </option>
+                                <option value="Dechet Demarrage">
+                                    Dechet Démarrage
                                 </option>
                             </select>
                             <button
