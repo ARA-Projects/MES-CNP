@@ -11,16 +11,20 @@ const DecNC = ({ data }) => {
     const [motif, setMotif] = useState("");
     const [quantite, setQuantite] = useState("");
     const saveNonConf = async () => {
-        const fetchedData = await fetchData(
-            "/mes/savenonconforme/miraflex",
-            "POST",
-            { quantite, motif }
-        );
-        if (fetchedData.success) {
-            navigate("/Page1");
+        if (quantite && motif) {
+            const fetchedData = await fetchData(
+                "/mes/savenonconforme/miraflex",
+                "POST",
+                { quantite, motif }
+            );
+            if (fetchedData.success) {
+                navigate("/Page1");
+            } else {
+                window.alert("Error");
+                console.error(fetchedData.error);
+            }
         } else {
             window.alert("Error");
-            console.error(fetchedData.error);
         }
     };
     return (
@@ -45,9 +49,9 @@ const DecNC = ({ data }) => {
                                 name="pannes"
                                 id="pannes"
                                 onChange={(e) => setMotif(e.target.value)}
-                                defaultValue={"DEFAULT"}
+                                defaultValue={""}
                             >
-                                <option value="DEFAULT" disabled>
+                                <option value="" disabled>
                                     --Choisir une option--
                                 </option>
                                 <option value="Sur diamètre">

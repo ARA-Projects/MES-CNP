@@ -11,19 +11,23 @@ const DecDechet = ({ data }) => {
     const [type, setType] = useState("");
     const [quantite, setQuantite] = useState("");
     const saveDechet = async () => {
-        const fetchedData = await fetchData(
-            "/mes/savedechet/complexage",
-            "POST",
-            {
-                quantite,
-                type,
+        if (quantite && type) {
+            const fetchedData = await fetchData(
+                "/mes/savedechet/complexage",
+                "POST",
+                {
+                    quantite,
+                    type,
+                }
+            );
+            if (fetchedData.success) {
+                navigate("/Page1");
+            } else {
+                window.alert("Error");
+                console.error(fetchedData.error);
             }
-        );
-        if (fetchedData.success) {
-            navigate("/Page1");
         } else {
             window.alert("Error");
-            console.error(fetchedData.error);
         }
     };
     return (
@@ -48,37 +52,43 @@ const DecDechet = ({ data }) => {
                                 name="pannes"
                                 id="pannes"
                                 onChange={(e) => setType(e.target.value)}
-                                defaultValue={"DEFAULT"}
+                                defaultValue={""}
                             >
-                                <option value="DEFAULT" disabled>
+                                <option value="" disabled>
                                     --Choisir une option--
                                 </option>
-                                <option value="Dechet de changement">
-                                    Déchet de changement
+                                <option value="Dechet reglage BAT">
+                                    Dechet reglage BAT
                                 </option>
-                                <option value="Dechet echantillion">
-                                    Dechet echantillion
+                                <option value="Ruban standard">
+                                    Ruban non standard
                                 </option>
-                                <option value="Dechet panne machine">
-                                    Dechet panne machine
+                                <option value="Fin de bobine">
+                                    Fin de bobine
                                 </option>
                                 <option value="Dechet coupure courant">
                                     Dechet coupure courant
                                 </option>
-                                <option value="Dechet Probleme MP">
-                                    Dechet Probleme MP
+                                <option value="Raccord impression + complexage">
+                                    Raccord impression + complexage
                                 </option>
-                                <option value="Dechet Purge">
-                                    Dechet Purge
+                                <option value="Fin de bobine vierge">
+                                    Fin de bobine vierge
                                 </option>
-                                <option value="Dechet Ruban">
-                                    Dechet Ruban
+                                <option value="Dechet probleme matiere">
+                                    Dechet probleme matiere
                                 </option>
                                 <option value="Dechet Reglage">
                                     Dechet Reglage
                                 </option>
-                                <option value="Dechet Demarrage">
-                                    Dechet Démarrage
+                                <option value="Dechet echantillion">
+                                    Dechet echantillion
+                                </option>
+                                <option value="Dechet de reperage">
+                                    Dechet de reperage
+                                </option>
+                                <option value="Film non traite">
+                                    Film non traite
                                 </option>
                             </select>
                             <button

@@ -14,9 +14,7 @@ const Sidebar = () => {
         operateur: "Personne",
         poste: "-",
     });
-
     let fetching = false;
-
     const getData = async () => {
         fetching = true;
         const fetchedData = await fetchData("/mes/navbar/complexage", "GET");
@@ -27,7 +25,6 @@ const Sidebar = () => {
         }
         fetching = false;
     };
-
     const checkUser = async () => {
         fetching = true;
         const fetchedData = await fetchData("/mes/checkuser/complexage", "GET");
@@ -40,7 +37,6 @@ const Sidebar = () => {
         }
         fetching = false;
     };
-
     useEffect(() => {
         setInterval(() => {
             setTime(currentTime());

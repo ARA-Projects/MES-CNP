@@ -49,9 +49,9 @@ const DecNC = ({ data }) => {
                                 name="pannes"
                                 id="pannes"
                                 onChange={(e) => setMotif(e.target.value)}
-                                defaultValue={"DEFAULT"}
+                                defaultValue={""}
                             >
-                                <option value="DEFAULT" disabled>
+                                <option value="" disabled>
                                     --Choisir une option--
                                 </option>
                                 <option value="Sur diamètre">

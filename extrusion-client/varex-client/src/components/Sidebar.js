@@ -20,9 +20,7 @@ const Sidebar = () => {
         operateur: "Personne",
         poste: "-",
     });
-
     let fetching = false;
-
     const getData = async () => {
         fetching = true;
         const fetchedData = await fetchData("/mes/navbar/varex", "GET");
@@ -33,7 +31,6 @@ const Sidebar = () => {
         }
         fetching = false;
     };
-
     const checkUser = async () => {
         fetching = true;
         const fetchedData = await fetchData("/mes/checkuser/varex", "GET");
