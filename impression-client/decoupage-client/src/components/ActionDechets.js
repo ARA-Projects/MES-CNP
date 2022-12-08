@@ -7,7 +7,6 @@ import SendIcon from "@mui/icons-material/Send";
 import "./ActionDechets.css";
 
 export default function Action({ display, data }) {
-    const [valide, setValide] = useState(0);
     const [div1, setDiv1] = useState();
     const [div2, setDiv2] = useState();
     const [matricule, setMatricule] = useState("");
@@ -37,16 +36,19 @@ export default function Action({ display, data }) {
         }
     };
     const validerDechet = async () => {
-        const fetchedData = await fetchData(
-            "/mes/validerdechet/decoupage/" + data.datte,
-            "PUT",
-            { valide }
-        );
-        if (fetchedData.success) {
-            setValide(1);
+        if (newData.quantity && newData.type) {
+            const fetchedData = await fetchData(
+                "/mes/validerdechet/decoupage/" + data.datte,
+                "PUT",
+                newData
+            );
+            if (fetchedData.success) {
+            } else {
+                window.alert("Error");
+                console.error(fetchedData.error);
+            }
         } else {
             window.alert("Error");
-            console.error(fetchedData.error);
         }
     };
     return (
@@ -89,28 +91,34 @@ export default function Action({ display, data }) {
                         setNewData({ ...newData, type: e.target.value })
                     }
                 >
-                    <option value="DEFAULT" disabled>
+                    <option value="" disabled>
                         --Choisir une option--
                     </option>
-                    <option value="Dechet de changement">
-                        Déchet de changement
+                    <option value="Dechet reglage BAT">
+                        Déchet réglage BAT
                     </option>
-                    <option value="Dechet echantillion">
-                        Dechet echantillion
-                    </option>
-                    <option value="Dechet panne machine">
-                        Dechet panne machine
-                    </option>
+                    <option value="Ruban standard">Ruban non standard</option>
+                    <option value="Fin de bobine">Fin de bobine</option>
                     <option value="Dechet coupure courant">
-                        Dechet coupure courant
+                        Déchet coupure courant
                     </option>
-                    <option value="Dechet Probleme MP">
-                        Dechet Probleme MP
+                    <option value="Raccord impression + complexage">
+                        Raccord impression + complexage
                     </option>
-                    <option value="Dechet Purge">Dechet Purge</option>
-                    <option value="Dechet Ruban">Dechet Ruban</option>
-                    <option value="Dechet Reglage">Dechet Reglage</option>
-                    <option value="Dechet Demarrage">Dechet Démarrage</option>
+                    <option value="Fin de bobine vierge">
+                        Fin de bobine vierge
+                    </option>
+                    <option value="Dechet probleme matiere">
+                        Déchet problème matière
+                    </option>
+                    <option value="Dechet Reglage">Déchet réglage</option>
+                    <option value="Dechet echantillion">
+                        Déchet échantillion
+                    </option>
+                    <option value="Dechet de reperage">
+                        Déchet de repérage
+                    </option>
+                    <option value="Film non traite">Film non traité</option>
                 </select>
                 <Button
                     variant="outlined"

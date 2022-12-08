@@ -7,44 +7,8 @@ import Sidebar from "../components/Sidebar";
 import { fetchData, fetchPHP } from "../functions/functions";
 import * as React from "react";
 import { useState } from "react";
-import { styled } from "@mui/material/styles";
-import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
-import InputBase from "@mui/material/InputBase";
 
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
-    "label + &": {
-        marginTop: theme.spacing(3),
-    },
-    "& .MuiInputBase-input": {
-        borderRadius: 4,
-        position: "relative",
-        backgroundColor: theme.palette.background.paper,
-        border: "1px solid #ced4da",
-        fontSize: 16,
-        padding: "10px 26px 10px 12px",
-        transition: theme.transitions.create(["border-color", "box-shadow"]),
-        // Use the system font instead of the default Roboto font.
-        fontFamily: [
-            "-apple-system",
-            "BlinkMacSystemFont",
-            '"Segoe UI"',
-            "Roboto",
-            '"Helvetica Neue"',
-            "Arial",
-            "sans-serif",
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-        ].join(","),
-        "&:focus": {
-            borderRadius: 4,
-            borderColor: "#80bdff",
-            boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-        },
-    },
-}));
 let preData = {
     N_OF: "",
     qt_ob: 0,
@@ -62,17 +26,25 @@ let preData = {
 const Page2 = () => {
     const [data, setData] = useState(preData);
     const [designation, setDesignation] = useState("");
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let link =
-            "/A_ICONS/Operator/Impression/Complexage/Php_Pages/nouveauOF.php";
-        let result = await fetchPHP(link, data);
-        if (result == "Success@") {
-            window.alert("YEAY");
-        } else {
-            console.error(result);
-            window.alert("Internal error");
+        let doit = true;
+        for (const key in data) {
+            if (!data[key]) {
+                doit = false;
+                break;
+            }
+        }
+        if (doit) {
+            let link =
+                "/A_ICONS/Operator/Impression/Complexage/Php_Pages/nouveauOF.php";
+            let result = await fetchPHP(link, data);
+            if (result === "Success@") {
+                window.alert("YEAY");
+            } else {
+                console.error(result);
+                window.alert("Internal error");
+            }
         }
     };
     const getArticle = async (value) => {
@@ -85,7 +57,7 @@ const Page2 = () => {
                 if (result.data.exists) {
                     let newData = result.data.data;
                     for (const d in result.data.data) {
-                        if (d == "id") {
+                        if (d === "id") {
                             delete newData.id;
                             continue;
                         } else {
@@ -115,10 +87,10 @@ const Page2 = () => {
                 if (result.data.exists) {
                     let newData = result.data.data;
                     for (const d in result.data.data) {
-                        if (d == "id") {
+                        if (d === "id") {
                             delete newData.id;
                             continue;
-                        } else if (d == "enprod") {
+                        } else if (d === "enprod") {
                             delete newData.enprod;
                             continue;
                         }

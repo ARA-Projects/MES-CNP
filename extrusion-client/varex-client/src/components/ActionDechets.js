@@ -91,28 +91,28 @@ export default function Action({ display, data }) {
                         setNewData({ ...newData, type: e.target.value })
                     }
                 >
-                    <option value="DEFAULT" disabled>
+                    <option value="" disabled>
                         --Choisir une option--
                     </option>
                     <option value="Dechet de changement">
                         Déchet de changement
                     </option>
                     <option value="Dechet echantillion">
-                        Dechet echantillion
+                        Déchet échantillion
                     </option>
                     <option value="Dechet panne machine">
-                        Dechet panne machine
+                        Déchet panne machine
                     </option>
                     <option value="Dechet coupure courant">
-                        Dechet coupure courant
+                        Déchet coupure courant
                     </option>
                     <option value="Dechet Probleme MP">
-                        Dechet Probleme MP
+                        Déchet Problème MP
                     </option>
-                    <option value="Dechet Purge">Dechet Purge</option>
-                    <option value="Dechet Ruban">Dechet Ruban</option>
-                    <option value="Dechet Reglage">Dechet Reglage</option>
-                    <option value="Dechet Demarrage">Dechet Démarrage</option>
+                    <option value="Dechet Purge">Déchet Purge</option>
+                    <option value="Dechet Ruban">Déchet Ruban</option>
+                    <option value="Dechet Reglage">Déchet Reglage</option>
+                    <option value="Dechet Demarrage">Déchet Démarrage</option>
                 </select>
                 <Button
                     variant="outlined"

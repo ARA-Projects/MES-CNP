@@ -58,7 +58,7 @@ const DecDechet = ({ data }) => {
                                     --Choisir une option--
                                 </option>
                                 <option value="Dechet reglage BAT">
-                                    Dechet reglage BAT
+                                    Dechet réglage BAT
                                 </option>
                                 <option value="Ruban standard">
                                     Ruban non standard
@@ -67,7 +67,7 @@ const DecDechet = ({ data }) => {
                                     Fin de bobine
                                 </option>
                                 <option value="Dechet coupure courant">
-                                    Dechet coupure courant
+                                    Déchet coupure courant
                                 </option>
                                 <option value="Raccord impression + complexage">
                                     Raccord impression + complexage
@@ -76,19 +76,19 @@ const DecDechet = ({ data }) => {
                                     Fin de bobine vierge
                                 </option>
                                 <option value="Dechet probleme matiere">
-                                    Dechet probleme matiere
+                                    Déchet problème matière
                                 </option>
                                 <option value="Dechet Reglage">
-                                    Dechet Reglage
+                                    Déchet réglage
                                 </option>
                                 <option value="Dechet echantillion">
-                                    Dechet echantillion
+                                    Déchet échantillion
                                 </option>
                                 <option value="Dechet de reperage">
-                                    Dechet de reperage
+                                    Déchet de repérage
                                 </option>
                                 <option value="Film non traite">
-                                    Film non traite
+                                    Film non traité
                                 </option>
                             </select>
                             <button

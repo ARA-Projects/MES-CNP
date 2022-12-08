@@ -69,17 +69,25 @@ for (let i = 1; i <= 8; i++) {
 const Page2 = () => {
     const [data, setData] = useState(preData);
     const [designation, setDesignation] = useState("");
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let link =
-            "/A_ICONS/Operator/Impression/Miraflex/Php_Pages/nouveauOF.php";
-        let result = await fetchPHP(link, data);
-        if (result === "Success@") {
-            window.alert("YEAY");
-        } else {
-            console.error(result);
-            window.alert("Internal error");
+        let doit = true;
+        for (const key in data) {
+            if (!data[key]) {
+                doit = false;
+                break;
+            }
+        }
+        if (doit) {
+            let link =
+                "/A_ICONS/Operator/Impression/Miraflex/Php_Pages/nouveauOF.php";
+            let result = await fetchPHP(link, data);
+            if (result === "Success@") {
+                window.alert("YEAY");
+            } else {
+                console.error(result);
+                window.alert("Internal error");
+            }
         }
     };
     const getArticle = async (value) => {

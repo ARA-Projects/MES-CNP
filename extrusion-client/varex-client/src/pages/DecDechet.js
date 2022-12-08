@@ -61,28 +61,28 @@ const DecDechet = ({ data }) => {
                                     Déchet de changement
                                 </option>
                                 <option value="Dechet echantillion">
-                                    Dechet echantillion
+                                    Déchet échantillion
                                 </option>
                                 <option value="Dechet panne machine">
-                                    Dechet panne machine
+                                    Déchet panne machine
                                 </option>
                                 <option value="Dechet coupure courant">
-                                    Dechet coupure courant
+                                    Déchet coupure courant
                                 </option>
                                 <option value="Dechet Probleme MP">
-                                    Dechet Probleme MP
+                                    Déchet Problème MP
                                 </option>
                                 <option value="Dechet Purge">
-                                    Dechet Purge
+                                    Déchet Purge
                                 </option>
                                 <option value="Dechet Ruban">
-                                    Dechet Ruban
+                                    Déchet Ruban
                                 </option>
                                 <option value="Dechet Reglage">
-                                    Dechet Reglage
+                                    Déchet Réglage
                                 </option>
                                 <option value="Dechet Demarrage">
-                                    Dechet Démarrage
+                                    Déchet Démarrage
                                 </option>
                             </select>
                             <button

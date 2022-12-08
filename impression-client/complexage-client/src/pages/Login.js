@@ -36,6 +36,7 @@ const Login = () => {
         }
     };
     useEffect(() => {
+        checkUser();
         setInterval(() => {
             checkUser();
         }, 60000);

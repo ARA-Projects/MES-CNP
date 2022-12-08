@@ -24,7 +24,6 @@ const Page2 = () => {
     function display() {
         setShowList(!showList);
     }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         let doit = true;
