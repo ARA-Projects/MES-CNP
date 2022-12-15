@@ -1,7 +1,7 @@
 import "./Page2.css";
 import homepicrot from "../assets/homepicrot.png";
 import leave from "../assets/leave.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import varex from "../assets/varex.png";
 import { useState } from "react";
 import List from "../components/List";
@@ -24,6 +24,7 @@ for (let i = 1; i <= 24; i++) {
 }
 
 const Page2 = () => {
+    const navigate = useNavigate();
     const [data, setData] = useState(preData);
     const [showList, setShowList] = useState(false);
     function display() {
@@ -52,7 +53,8 @@ const Page2 = () => {
                 }
                 result = await fetchPHP(link, data);
                 if (result === "Success@") {
-                    //TODO Go to page 1
+                    NotificationManager.success("OF enregistré");
+                    navigate("/Page1");
                 } else {
                     console.error(result);
                     NotificationManager.error("Internal error");

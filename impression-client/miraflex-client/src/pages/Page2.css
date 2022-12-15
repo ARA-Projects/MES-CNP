@@ -93,3 +93,14 @@ input {
     margin: auto;
     margin-top: 5%;
 }
+.button_rechercher {
+    margin-top: 10px;
+    padding: 10px;
+    width: 150px;
+    margin-inline: auto;
+    text-align: center;
+    background-color: aquamarine;
+}
+.button_valider {
+    opacity: 0;
+}

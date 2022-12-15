@@ -1,7 +1,7 @@
 import "./Page2.css";
 import homepicrot from "../assets/homepicrot.png";
 import leave from "../assets/leave.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import miraflex from "../assets/miraflex.png";
 import Sidebar from "../components/Sidebar";
 import { useState } from "react";
@@ -72,7 +72,7 @@ for (let i = 1; i <= 8; i++) {
     preData["position_" + i + "_%"] = 0;
 }
 const Page2 = () => {
-    console.log(preData);
+    const navigate = useNavigate();
     const [data, setData] = useState(preData);
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -89,6 +89,7 @@ const Page2 = () => {
             let result = await fetchPHP(link, data);
             if (result === "Success@") {
                 NotificationManager.success("OF enregistré");
+                navigate("/Page1");
             } else {
                 console.error(result);
                 NotificationManager.error("Internal error");
@@ -192,7 +193,7 @@ const Page2 = () => {
                         }}
                         className="top-down"
                     >
-                        <button>Valider</button>
+                        <button className="button_valider">Valider</button>
                         <div className="top">
                             <div>
                                 <h2>Ordre de fabrication</h2>
@@ -214,6 +215,7 @@ const Page2 = () => {
                                         }}
                                     />
                                     <div
+                                        className="button_rechercher"
                                         onClick={() => {
                                             getOF(data.N_OF);
                                         }}

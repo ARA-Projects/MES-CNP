@@ -1,0 +1,108 @@
+.page3-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.sidebar {
+    background-color: #313131;
+    height: 100vh;
+    width: 25%;
+}
+ul {
+    list-style: none;
+    margin-left: -1em;
+}
+li {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 37px;
+}
+.green {
+    color: #92d050;
+    text-decoration: underline;
+    padding-bottom: 5%;
+    font-weight: bold;
+    height: 50px;
+    padding-top: 95px;
+}
+
+.blue {
+    color: #01aeef !important;
+    font-weight: bold;
+}
+.w {
+    padding: 3em;
+}
+.b {
+    display: flex;
+    flex-direction: row;
+    width: 276px;
+    height: 30px;
+}
+.logo-img {
+    right: 0;
+    top: 0;
+}
+.cms-img {
+    display: flex;
+    position: relative;
+    align-items: center;
+    width: 100%;
+    margin-top: 5%;
+}
+.exit {
+    height: 70px;
+    width: 70px;
+}
+.dechet-head {
+    color: #005a7a;
+    font-size: 2em;
+    background-color: white;
+    border-radius: 25px;
+    padding: 1.5% 15%;
+    width: 50%;
+}
+.dechet-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 300px;
+    width: 45%;
+    background-color: rgb(134, 134, 134);
+}
+.dechet-body > input {
+    background-color: black;
+    color: white;
+    padding: 1.5%;
+    width: 50%;
+    border: 1px solid white;
+}
+.dechet-body > select {
+    border: 1px solid white;
+    outline: none;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    padding: 15px;
+    font-size: 14px;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+    width: 50%;
+}
+.dechet-body > .valider {
+    width: 60%;
+    height: 35px;
+    color: black;
+    background-color: greenyellow;
+    border: none;
+    cursor: pointer;
+}

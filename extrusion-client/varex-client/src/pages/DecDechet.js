@@ -26,6 +26,7 @@ const DecDechet = ({ data }) => {
                 }
             );
             if (fetchedData.success) {
+                NotificationManager.success("Success");
                 navigate("/Page1");
             } else {
                 NotificationManager.error("Error");

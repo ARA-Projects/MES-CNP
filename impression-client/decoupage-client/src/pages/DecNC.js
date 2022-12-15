@@ -23,6 +23,7 @@ const DecNC = ({ data }) => {
                 { quantite, motif }
             );
             if (fetchedData.success) {
+                NotificationManager.success("Success");
                 navigate("/Page1");
             } else {
                 NotificationManager.error("Error");
@@ -49,12 +50,16 @@ const DecNC = ({ data }) => {
                                 min={0}
                                 id="Quantité"
                                 placeholder="Quantité en Kg"
-                                onChange={(e) => setQuantite(e.target.value)}
+                                onChange={(e) => {
+                                    setQuantite(e.target.value);
+                                }}
                             />
                             <select
                                 name="pannes"
                                 id="pannes"
-                                onChange={(e) => setMotif(e.target.value)}
+                                onChange={(e) => {
+                                    setMotif(e.target.value);
+                                }}
                                 defaultValue={""}
                             >
                                 <option value="" disabled>
@@ -122,7 +127,9 @@ const DecNC = ({ data }) => {
                             </select>
                             <button
                                 className="valider"
-                                onClick={() => saveNonConf()}
+                                onClick={() => {
+                                    saveNonConf();
+                                }}
                             >
                                 Valider
                             </button>

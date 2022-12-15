@@ -83,6 +83,7 @@ export default function Action({ display, data }) {
             </div>
             <div className="div2" style={div2}>
                 <input
+                    className="inp1"
                     type="number"
                     value={newData.quantity}
                     onChange={(e) =>
@@ -90,6 +91,7 @@ export default function Action({ display, data }) {
                     }
                 />
                 <select
+                    className="inp2"
                     name="pannes"
                     id="pannes"
                     value={newData.type}

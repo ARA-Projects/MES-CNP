@@ -1,7 +1,7 @@
 import "./Page2.css";
 import homepicrot from "../assets/homepicrot.png";
 import leave from "../assets/leave.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import decoupe from "../assets/decoupe.png";
 import Sidebar from "../components/Sidebar";
 import { fetchData, fetchPHP } from "../functions/functions";
@@ -31,12 +31,13 @@ let preData = {
     nbr_bobine: 0,
 };
 const Page2 = () => {
+    const navigate = useNavigate();
     const [data, setData] = useState(preData);
     const handleSubmit = async (e) => {
         e.preventDefault();
         let doit = true;
         for (const key in data) {
-            if (!data[key]) {
+            if (!data[key] && (key === "qt_ob" || key === "N_OF")) {
                 doit = false;
                 break;
             }
@@ -47,6 +48,7 @@ const Page2 = () => {
             let result = await fetchPHP(link, data);
             if (result === "Success@") {
                 NotificationManager.success("OF enregistré");
+                navigate("/Page1");
             } else {
                 console.error(result);
                 NotificationManager.error("Internal error");
@@ -79,15 +81,8 @@ const Page2 = () => {
                         }
                     }
                     setData(newData);
-                } else {
-                    setData(preData);
                 }
-            } else {
-                console.error(result.error);
-                NotificationManager.error("Internal error");
             }
-        } else {
-            setData(preData);
         }
     };
     const getOF = async (value) => {
@@ -131,9 +126,12 @@ const Page2 = () => {
                         <h1>Résultat instantané - Découpage</h1>
                     </div>
                     <form
-                        onSubmit={(e) => handleSubmit(e)}
+                        onSubmit={(e) => {
+                            handleSubmit(e);
+                        }}
                         className="top-middle-down"
                     >
+                        <button className="button_valider">Valider</button>
                         <div className="top">
                             <div>
                                 <h2>Ordre de fabrication</h2>
@@ -154,19 +152,22 @@ const Page2 = () => {
                                             });
                                         }}
                                     />
-                                    <button onClick={() => getOF(data.N_OF)}>
+                                    <div
+                                        className="button_rechercher"
+                                        onClick={() => {
+                                            getOF(data.N_OF);
+                                        }}
+                                    >
                                         Rechercher OF
-                                    </button>
+                                    </div>
                                 </div>
                             </div>
                             <div>
                                 <div className="numOF">
                                     <label>Référence article</label>
                                     <input
-                                        type="number"
+                                        type="text"
                                         className="nOf"
-                                        id="Numéro d'OF"
-                                        min={0}
                                         value={data.designation}
                                         onChange={(e) => {
                                             setData({
@@ -187,12 +188,12 @@ const Page2 = () => {
                                         id="Numéro d'OF"
                                         min={0}
                                         value={data.qt_ob}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setData({
                                                 ...data,
                                                 qt_ob: e.target.value,
-                                            })
-                                        }
+                                            });
+                                        }}
                                     />
                                 </FormControl>
                             </div>
@@ -206,12 +207,12 @@ const Page2 = () => {
                                         <input
                                             type={"number"}
                                             value={data.epaisseur}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
                                                 setData({
                                                     ...data,
                                                     epaisseur: e.target.value,
-                                                })
-                                            }
+                                                });
+                                            }}
                                         />
                                         <label>um</label>
                                     </div>
@@ -220,12 +221,12 @@ const Page2 = () => {
                                         <input
                                             type={"number"}
                                             value={data.laize}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
                                                 setData({
                                                     ...data,
                                                     laize: e.target.value,
-                                                })
-                                            }
+                                                });
+                                            }}
                                         />
                                         <label>mm</label>
                                     </div>
@@ -234,13 +235,13 @@ const Page2 = () => {
                                         <input
                                             type={"number"}
                                             value={data.masse_volume}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
                                                 setData({
                                                     ...data,
                                                     masse_volume:
                                                         e.target.value,
-                                                })
-                                            }
+                                                });
+                                            }}
                                         />
                                         <label>Kg/cm3</label>
                                     </div>
@@ -249,12 +250,12 @@ const Page2 = () => {
                                         <input
                                             type={"number"}
                                             value={data.vitesse}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
                                                 setData({
                                                     ...data,
                                                     vitesse: e.target.value,
-                                                })
-                                            }
+                                                });
+                                            }}
                                         />
                                         <label>m/min</label>
                                     </div>
@@ -265,12 +266,12 @@ const Page2 = () => {
                                         <input
                                             type={"number"}
                                             value={data.nbr_bobine}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
                                                 setData({
                                                     ...data,
                                                     nbr_bobine: e.target.value,
-                                                })
-                                            }
+                                                });
+                                            }}
                                         />
                                     </div>
                                     <div className="div-2">
@@ -278,13 +279,13 @@ const Page2 = () => {
                                         <input
                                             type={"number"}
                                             value={data.dechet_droit}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
                                                 setData({
                                                     ...data,
                                                     dechet_droit:
                                                         e.target.value,
-                                                })
-                                            }
+                                                });
+                                            }}
                                         />
                                         <label>mm</label>
                                     </div>
@@ -293,13 +294,13 @@ const Page2 = () => {
                                         <input
                                             type={"number"}
                                             value={data.dechet_gauche}
-                                            onChange={(e) =>
+                                            onChange={(e) => {
                                                 setData({
                                                     ...data,
                                                     dechet_gauche:
                                                         e.target.value,
-                                                })
-                                            }
+                                                });
+                                            }}
                                         />
                                         <label>mm</label>
                                     </div>

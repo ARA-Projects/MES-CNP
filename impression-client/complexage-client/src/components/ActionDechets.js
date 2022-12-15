@@ -83,6 +83,7 @@ export default function Action({ display, data }) {
             </div>
             <div className="div2" style={div2}>
                 <input
+                    className="inp1"
                     type="number"
                     value={newData.quantity}
                     onChange={(e) =>

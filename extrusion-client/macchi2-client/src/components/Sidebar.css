@@ -1,0 +1,21 @@
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 50px;
+    width: 75%;
+}
+.buttons > button {
+    height: 50px;
+    width: 100px;
+    background-color: darkgray;
+    color: white;
+    border-radius: 25px;
+    border: none;
+}
+
+.buttons > button:hover {
+    cursor: pointer;
+    border: 2px dotted navy;
+}

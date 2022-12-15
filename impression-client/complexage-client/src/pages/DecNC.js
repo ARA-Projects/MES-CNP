@@ -23,6 +23,7 @@ const DecNC = ({ data }) => {
                 { quantite, motif }
             );
             if (fetchedData.success) {
+                NotificationManager.success("Success");
                 navigate("/Page1");
             } else {
                 NotificationManager.error("Error");

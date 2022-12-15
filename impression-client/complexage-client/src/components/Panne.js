@@ -16,7 +16,7 @@ const Panne = ({ display, data }) => {
             { cause }
         );
         if (fetchedData.success) {
-            NotificationManager.error("Success");
+            NotificationManager.success("Success");
         } else {
             NotificationManager.error("Error");
             console.error(fetchedData.error);

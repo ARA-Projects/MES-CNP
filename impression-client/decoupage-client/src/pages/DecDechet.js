@@ -26,6 +26,7 @@ const DecDechet = ({ data }) => {
                 }
             );
             if (fetchedData.success) {
+                NotificationManager.success("Success");
                 navigate("/Page1");
             } else {
                 NotificationManager.error("Error");
@@ -52,12 +53,16 @@ const DecDechet = ({ data }) => {
                                 min={0}
                                 id="Quantité"
                                 placeholder="Quantité en Kg"
-                                onChange={(e) => setQuantite(e.target.value)}
+                                onChange={(e) => {
+                                    setQuantite(e.target.value);
+                                }}
                             />
                             <select
                                 name="pannes"
                                 id="pannes"
-                                onChange={(e) => setType(e.target.value)}
+                                onChange={(e) => {
+                                    setType(e.target.value);
+                                }}
                                 defaultValue={""}
                             >
                                 <option value="" disabled>
@@ -99,7 +104,9 @@ const DecDechet = ({ data }) => {
                             </select>
                             <button
                                 className="valider"
-                                onClick={() => saveDechet()}
+                                onClick={() => {
+                                    saveDechet();
+                                }}
                             >
                                 Valider
                             </button>
