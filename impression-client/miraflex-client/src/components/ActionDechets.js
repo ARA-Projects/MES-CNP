@@ -5,6 +5,11 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import "./ActionDechets.css";
+import {
+    NotificationContainer,
+    NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 export default function Action({ display, data }) {
     const [div1, setDiv1] = useState();
@@ -28,11 +33,11 @@ export default function Action({ display, data }) {
                     display: "flex",
                 });
             } else {
-                window.alert("Wrong login");
+                NotificationManager.error("Wrong login");
                 console.error(fetchedData.error);
             }
         } else {
-            window.alert("Enter your credentials");
+            NotificationManager.error("Enter your credentials");
         }
     };
     const validerDechet = async () => {
@@ -44,11 +49,11 @@ export default function Action({ display, data }) {
             );
             if (fetchedData.success) {
             } else {
-                window.alert("Error");
+                NotificationManager.error("Error");
                 console.error(fetchedData.error);
             }
         } else {
-            window.alert("Error");
+            NotificationManager.error("Error");
         }
     };
     return (
@@ -56,6 +61,7 @@ export default function Action({ display, data }) {
             className="alert-container"
             style={{ display: display ? "flex" : "none" }}
         >
+            <NotificationContainer />
             <div className="div1" style={div1}>
                 {" "}
                 <TextField

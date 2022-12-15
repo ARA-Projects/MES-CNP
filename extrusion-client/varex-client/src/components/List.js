@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./List.css";
 import valider from "../assets/btn-valider.png";
 import { fetchPHP } from "../functions/functions";
+
 let inputs = [[], [], []];
 let preLot = [];
 const showInputs = () => {
@@ -98,6 +99,7 @@ const List = ({ display, data, setData }) => {
                                             />
                                             <input
                                                 type="number"
+                                                step={0.001}
                                                 placeholder="%"
                                                 value={data["per" + i]}
                                                 onChange={(e) => {

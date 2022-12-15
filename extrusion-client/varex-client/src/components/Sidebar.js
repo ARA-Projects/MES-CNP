@@ -9,6 +9,11 @@ import {
 import "../pages/Page1.css";
 import "./Sidebar.css";
 import cms from "../assets/cms.png";
+import {
+    NotificationContainer,
+    NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -62,14 +67,15 @@ const Sidebar = () => {
             { fin_of: true }
         );
         if (result === "Success@") {
-            window.alert("Fin OF");
+            NotificationManager.success("Fin OF");
         } else {
-            window.alert("Internal Error");
+            NotificationManager.error("Internal Error");
             console.error(result);
         }
     };
     return (
         <div className="sidebar">
+            <NotificationContainer />
             <img className="cms-img" src={cms} alt="cms" />
             <ul className="cms-list">
                 <div className="Time">

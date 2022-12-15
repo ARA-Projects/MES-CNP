@@ -4,6 +4,11 @@ import leave from "../assets/leave.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { fetchData } from "../functions/functions";
+import {
+    NotificationContainer,
+    NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -18,18 +23,18 @@ const Login = () => {
             if (fetchedData.data.connected) {
                 navigate("/Page1");
             } else {
-                window.alert("Wrong login");
+                NotificationManager.error("Wrong login");
                 console.error(fetchedData.error);
             }
         } else {
-            window.alert("Enter your credentials");
+            NotificationManager.error("Enter your credentials");
         }
     };
     const checkUser = async () => {
         const fetchedData = await fetchData("/mes/checkuser/decoupage", "GET");
         if (fetchedData.success) {
-            if (!fetchedData.data.connected) {
-                navigate("/Home");
+            if (fetchedData.data.connected) {
+                navigate("/Page1");
             }
         } else {
             console.error(fetchedData.error);
@@ -43,6 +48,7 @@ const Login = () => {
     }, []);
     return (
         <div className="login-container">
+            <NotificationContainer />
             <div className="logo-1 col-2">
                 <img src={homepicrot} alt="logo" className="logo-img" />
             </div>

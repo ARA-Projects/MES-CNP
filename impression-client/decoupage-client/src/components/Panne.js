@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { fetchData } from "../functions/functions";
 import "./Panne.css";
+import {
+    NotificationContainer,
+    NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 const Panne = ({ display, data }) => {
     const [cause, setCause] = useState("");
@@ -11,9 +16,9 @@ const Panne = ({ display, data }) => {
             { cause }
         );
         if (fetchedData.success) {
-            window.alert("Success");
+            NotificationManager.success("Success");
         } else {
-            window.alert("Error");
+            NotificationManager.error("Error");
             console.error(fetchedData.error);
         }
     };
@@ -22,6 +27,7 @@ const Panne = ({ display, data }) => {
             className="panne-container"
             style={{ display: display ? "flex" : "none" }}
         >
+            <NotificationContainer />
             <select
                 name="pannes"
                 id="pannes"

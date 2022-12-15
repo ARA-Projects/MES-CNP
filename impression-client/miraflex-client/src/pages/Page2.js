@@ -12,6 +12,11 @@ import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import InputBase from "@mui/material/InputBase";
 import { fetchData, fetchPHP } from "../functions/functions";
+import {
+    NotificationContainer,
+    NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
@@ -48,32 +53,32 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 let preData = {
     N_OF: "",
+    designation: "-",
     qt_ob: 0,
     qt_ob_unit: "METER",
     Epaisseur: 0,
     Laise: 0,
     vth: 0,
     massev: 0,
-    alcool: "",
+    alcool: "-",
     "alcool_%": 0,
-    ethoxy: "",
+    ethoxy: "-",
     "ethoxy_%": 0,
-    acetate: "",
+    acetate: "-",
     "acetate_%": 0,
 };
 for (let i = 1; i <= 8; i++) {
-    preData["position_" + i] = "";
+    preData["position_" + i] = "-";
     preData["position_" + i + "_%"] = 0;
 }
-
 const Page2 = () => {
+    console.log(preData);
     const [data, setData] = useState(preData);
-    const [designation, setDesignation] = useState("");
     const handleSubmit = async (e) => {
         e.preventDefault();
         let doit = true;
         for (const key in data) {
-            if (!data[key]) {
+            if (!data[key] && (key === "qt_ob" || key === "N_OF")) {
                 doit = false;
                 break;
             }
@@ -83,19 +88,20 @@ const Page2 = () => {
                 "/A_ICONS/Operator/Impression/Miraflex/Php_Pages/nouveauOF.php";
             let result = await fetchPHP(link, data);
             if (result === "Success@") {
-                window.alert("YEAY");
+                NotificationManager.success("OF enregistré");
             } else {
                 console.error(result);
-                window.alert("Internal error");
+                NotificationManager.error("Internal error");
             }
         }
     };
     const getArticle = async (value) => {
-        if (designation) {
+        if (data.designation) {
             const result = await fetchData(
                 "/mes/getarticle/miraflex/" + value,
                 "GET"
             );
+            console.log(result);
             if (result.success) {
                 if (result.data.exists) {
                     console.log(result.data.data);
@@ -123,14 +129,9 @@ const Page2 = () => {
                     }
                     setData(newData);
                 } else {
-                    setData(preData);
+                    //setData(preData);
                 }
-            } else {
-                console.error(result.error);
-                window.alert("Internal error");
             }
-        } else {
-            setData(preData);
         }
     };
     const getOF = async (value) => {
@@ -164,11 +165,10 @@ const Page2 = () => {
                         }
                     }
                     setData(newData);
-                    setDesignation("");
                 }
             } else {
                 console.error(result.error);
-                window.alert("Internal error");
+                NotificationManager.error("Internal error");
             }
         } else {
             setData(preData);
@@ -176,6 +176,7 @@ const Page2 = () => {
     };
     return (
         <div className="page2">
+            <NotificationContainer />
             <div className="logo-1 col-2">
                 <img src={homepicrot} alt="logo" className="logo-img" />
             </div>
@@ -185,19 +186,19 @@ const Page2 = () => {
                     <div className="title">
                         <h1>Résultat instantané - Miraflex</h1>
                     </div>
-                    <button onClick={() => getOF(data.N_OF)}>
-                        Rechercher OF
-                    </button>
                     <form
-                        onSubmit={(e) => handleSubmit(e)}
+                        onSubmit={(e) => {
+                            handleSubmit(e);
+                        }}
                         className="top-down"
                     >
+                        <button>Valider</button>
                         <div className="top">
                             <div>
                                 <h2>Ordre de fabrication</h2>
                             </div>
                             <div>
-                                <div>
+                                <div className="numOF">
                                     <label>Numéro OF</label>
                                     <input
                                         type="number"
@@ -212,18 +213,28 @@ const Page2 = () => {
                                             });
                                         }}
                                     />
+                                    <div
+                                        onClick={() => {
+                                            getOF(data.N_OF);
+                                        }}
+                                    >
+                                        Rechercher OF
+                                    </div>
                                 </div>
                             </div>
                             <div>
-                                <div>
+                                <div className="numOF">
                                     <label>Référence article</label>
                                     <input
                                         type="text"
                                         className="nOf"
                                         id="Réference"
-                                        value={designation}
+                                        value={data.designation}
                                         onChange={(e) => {
-                                            setDesignation(e.target.value);
+                                            setData({
+                                                ...data,
+                                                designation: e.target.value,
+                                            });
                                             getArticle(e.target.value);
                                         }}
                                     />
@@ -237,12 +248,12 @@ const Page2 = () => {
                                         className="qte-obj"
                                         min={0}
                                         value={data.qt_ob}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setData({
                                                 ...data,
                                                 qt_ob: e.target.value,
-                                            })
-                                        }
+                                            });
+                                        }}
                                     />
                                 </FormControl>
                                 <FormControl sx={{ m: 1 }} variant="standard">
@@ -252,12 +263,12 @@ const Page2 = () => {
                                     <NativeSelect
                                         id="demo-customized-select-native"
                                         value={data.qt_ob_unit}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setData({
                                                 ...data,
                                                 qt_ob_unit: e.target.value,
-                                            })
-                                        }
+                                            });
+                                        }}
                                         input={<BootstrapInput />}
                                     >
                                         <option value={"KG"}>Kg</option>
@@ -280,12 +291,12 @@ const Page2 = () => {
                                     <input
                                         type={"number"}
                                         value={data.Laize}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setData({
                                                 ...data,
                                                 Laize: e.target.value,
-                                            })
-                                        }
+                                            });
+                                        }}
                                     />
                                     <label>mm</label>
                                 </div>
@@ -294,12 +305,12 @@ const Page2 = () => {
                                     <input
                                         type={"number"}
                                         value={data.vth}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setData({
                                                 ...data,
                                                 vth: e.target.value,
-                                            })
-                                        }
+                                            });
+                                        }}
                                     />
                                     <label>m/min</label>
                                 </div>
@@ -308,12 +319,12 @@ const Page2 = () => {
                                     <input
                                         type={"number"}
                                         value={data.massev}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setData({
                                                 ...data,
                                                 massev: e.target.value,
-                                            })
-                                        }
+                                            });
+                                        }}
                                     />
                                     <label>Kg/cm3</label>
                                 </div>
@@ -322,12 +333,12 @@ const Page2 = () => {
                                     <input
                                         type={"number"}
                                         value={data.Epaisseur}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setData({
                                                 ...data,
                                                 Epaisseur: e.target.value,
-                                            })
-                                        }
+                                            });
+                                        }}
                                     />
                                     <label>um</label>
                                 </div>

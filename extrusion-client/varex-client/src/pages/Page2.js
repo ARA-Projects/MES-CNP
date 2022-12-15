@@ -7,6 +7,11 @@ import { useState } from "react";
 import List from "../components/List";
 import Sidebar from "../components/Sidebar";
 import { fetchPHP, fetchData } from "../functions/functions";
+import {
+    NotificationContainer,
+    NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 let preData = {
     N_OF: "",
@@ -28,7 +33,7 @@ const Page2 = () => {
         e.preventDefault();
         let doit = true;
         for (const key in data) {
-            if (!data[key]) {
+            if (!data[key] && (key === "debit" || key === "N_OF")) {
                 doit = false;
                 break;
             }
@@ -50,14 +55,14 @@ const Page2 = () => {
                     //TODO Go to page 1
                 } else {
                     console.error(result);
-                    window.alert("Internal error");
+                    NotificationManager.error("Internal error");
                 }
             } else {
                 console.error(result.error);
-                window.alert("Internal error");
+                NotificationManager.error("Internal error");
             }
         } else {
-            window.alert("Error");
+            NotificationManager.error("Error");
         }
     };
     const getOF = async (value) => {
@@ -88,7 +93,7 @@ const Page2 = () => {
                 }
             } else {
                 console.error(result.error);
-                window.alert("Internal error");
+                NotificationContainer.error("Internal error");
             }
         } else {
             setData(preData);
@@ -96,6 +101,7 @@ const Page2 = () => {
     };
     return (
         <div className="page2">
+            <NotificationContainer />
             <div className="logo-1 col-2">
                 <img src={homepicrot} alt="logo" className="logo-img" />
             </div>

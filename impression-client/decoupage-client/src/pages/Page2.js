@@ -8,9 +8,15 @@ import { fetchData, fetchPHP } from "../functions/functions";
 import * as React from "react";
 import { useState } from "react";
 import FormControl from "@mui/material/FormControl";
+import {
+    NotificationContainer,
+    NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 let preData = {
     N_OF: "",
+    designation: "-",
     qt_ob: 0,
     qt_ob_unit: "METER",
     vitesse: 0,
@@ -26,7 +32,6 @@ let preData = {
 };
 const Page2 = () => {
     const [data, setData] = useState(preData);
-    const [designation, setDesignation] = useState("");
     const handleSubmit = async (e) => {
         e.preventDefault();
         let doit = true;
@@ -41,15 +46,15 @@ const Page2 = () => {
                 "/A_ICONS/Operator/Impression/Decoupage/Php_Pages/nouveauOF.php";
             let result = await fetchPHP(link, data);
             if (result === "Success@") {
-                window.alert("YEAY");
+                NotificationManager.success("OF enregistré");
             } else {
                 console.error(result);
-                window.alert("Internal error");
+                NotificationManager.error("Internal error");
             }
         }
     };
     const getArticle = async (value) => {
-        if (designation) {
+        if (data.designation) {
             const result = await fetchData(
                 "/mes/getarticle/decoupage/" + value,
                 "GET"
@@ -79,7 +84,7 @@ const Page2 = () => {
                 }
             } else {
                 console.error(result.error);
-                window.alert("Internal error");
+                NotificationManager.error("Internal error");
             }
         } else {
             setData(preData);
@@ -107,7 +112,7 @@ const Page2 = () => {
                 }
             } else {
                 console.error(result.error);
-                window.alert("Internal error");
+                NotificationManager.error("Internal error");
             }
         } else {
             setData(preData);
@@ -115,6 +120,7 @@ const Page2 = () => {
     };
     return (
         <div className="page2">
+            <NotificationContainer />
             <div className="logo-1 col-2">
                 <img src={homepicrot} alt="logo" className="logo-img" />
             </div>
@@ -124,9 +130,6 @@ const Page2 = () => {
                     <div className="title">
                         <h1>Résultat instantané - Découpage</h1>
                     </div>
-                    <button onClick={() => getOF(data.N_OF)}>
-                        Rechercher OF
-                    </button>
                     <form
                         onSubmit={(e) => handleSubmit(e)}
                         className="top-middle-down"
@@ -136,7 +139,7 @@ const Page2 = () => {
                                 <h2>Ordre de fabrication</h2>
                             </div>
                             <div>
-                                <div>
+                                <div className="numOF">
                                     <label>Numéro OF</label>
                                     <input
                                         type="number"
@@ -151,19 +154,25 @@ const Page2 = () => {
                                             });
                                         }}
                                     />
+                                    <button onClick={() => getOF(data.N_OF)}>
+                                        Rechercher OF
+                                    </button>
                                 </div>
                             </div>
                             <div>
-                                <div>
+                                <div className="numOF">
                                     <label>Référence article</label>
                                     <input
                                         type="number"
                                         className="nOf"
                                         id="Numéro d'OF"
                                         min={0}
-                                        value={designation}
+                                        value={data.designation}
                                         onChange={(e) => {
-                                            setDesignation(e.target.value);
+                                            setData({
+                                                ...data,
+                                                designation: e.target.value,
+                                            });
                                             getArticle(e.target.value);
                                         }}
                                     />

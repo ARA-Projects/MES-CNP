@@ -1,5 +1,5 @@
 import "./Results.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import homepicrot from "../assets/homepicrot.png";
 import { fetchData } from "../functions/functions";
 import leave from "../assets/leave.png";
@@ -19,11 +19,7 @@ const Page1 = () => {
             console.error(fetchedData.error);
         }
     };
-    useEffect(() => {
-        setInterval(() => {
-            getData();
-        }, 1000);
-    }, []);
+    getData();
     let i = 0;
     return (
         <div className="page1">

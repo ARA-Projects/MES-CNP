@@ -5,6 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import React, { useState } from "react";
 import { fetchData } from "../functions/functions";
+import {
+    NotificationContainer,
+    NotificationManager,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 const DecDechet = ({ data }) => {
     const navigate = useNavigate();
@@ -23,15 +28,16 @@ const DecDechet = ({ data }) => {
             if (fetchedData.success) {
                 navigate("/Page1");
             } else {
-                window.alert("Error");
+                NotificationManager.error("Error");
                 console.error(fetchedData.error);
             }
         } else {
-            window.alert("Error");
+            NotificationManager.error("Error");
         }
     };
     return (
         <React.Fragment>
+            <NotificationContainer />
             <div className="page2">
                 <div className="logo-1 col-2">
                     <img src={homepicrot} alt="logo" className="logo-img" />

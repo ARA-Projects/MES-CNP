@@ -82,3 +82,14 @@ input {
 .qte-obj {
     margin-top: 3%;
 }
+.numOF {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.numOF > button {
+    width: 50%;
+    border-radius: 25px;
+    margin: auto;
+    margin-top: 5%;
+}
