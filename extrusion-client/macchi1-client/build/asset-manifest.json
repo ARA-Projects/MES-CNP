@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.9c868381.css",
-    "main.js": "/static/js/main.e2d16807.js",
-    "static/media/pizza.png": "/static/media/pizza.7c45ab5ca0a55edfebdd.png",
-    "static/media/nonConforme.png": "/static/media/nonConforme.7c576b73272f4854fb15.png",
-    "static/media/odf.png": "/static/media/odf.1a55416d6c02a881cb05.png",
-    "static/media/dechets.png": "/static/media/dechets.eac445c19ae25d56ae82.png",
-    "static/media/results.png": "/static/media/results.25846ba69454a7de9bb4.png",
-    "static/media/macchi.png": "/static/media/macchi.babaa007855346022b5d.png",
-    "static/media/cms.png": "/static/media/cms.622f5cdabbdbac5168a8.png",
-    "static/media/homepic.png": "/static/media/homepic.58e196e9443295e5eaee.png",
-    "static/media/homepicrot.png": "/static/media/homepicrot.4f9990768fefa88eb31d.png",
-    "static/media/leave.png": "/static/media/leave.9cceb62968da0174d2cb.png",
-    "static/media/error.png": "/static/media/error.e6aa8f8d1889fb847022.png",
-    "static/media/notification.svg?s3g3t9": "/static/media/notification.5d0158671dd860c714c4.svg",
-    "static/media/notification.eot": "/static/media/notification.3657084dc0419605a91c.eot",
-    "static/media/notification.woff?s3g3t9": "/static/media/notification.c392cd33d9d9de730f9d.woff",
-    "static/media/notification.ttf?s3g3t9": "/static/media/notification.c5d9251ea82e42f75381.ttf",
-    "index.html": "/index.html",
-    "main.9c868381.css.map": "/static/css/main.9c868381.css.map",
-    "main.e2d16807.js.map": "/static/js/main.e2d16807.js.map"
+    "main.css": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/css/main.cf1dd58d.css",
+    "main.js": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/js/main.7755841f.js",
+    "static/media/pizza.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/pizza.7c45ab5ca0a55edfebdd.png",
+    "static/media/nonConforme.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/nonConforme.7c576b73272f4854fb15.png",
+    "static/media/odf.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/odf.1a55416d6c02a881cb05.png",
+    "static/media/dechets.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/dechets.eac445c19ae25d56ae82.png",
+    "static/media/results.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/results.25846ba69454a7de9bb4.png",
+    "static/media/macchi.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/macchi.babaa007855346022b5d.png",
+    "static/media/cms.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/cms.622f5cdabbdbac5168a8.png",
+    "static/media/homepic.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/homepic.58e196e9443295e5eaee.png",
+    "static/media/homepicrot.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/homepicrot.4f9990768fefa88eb31d.png",
+    "static/media/leave.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/leave.9cceb62968da0174d2cb.png",
+    "static/media/error.png": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/error.e6aa8f8d1889fb847022.png",
+    "static/media/notification.svg?s3g3t9": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/notification.5d0158671dd860c714c4.svg",
+    "static/media/notification.eot": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/notification.3657084dc0419605a91c.eot",
+    "static/media/notification.woff?s3g3t9": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/notification.c392cd33d9d9de730f9d.woff",
+    "static/media/notification.ttf?s3g3t9": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/media/notification.c5d9251ea82e42f75381.ttf",
+    "index.html": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/index.html",
+    "main.cf1dd58d.css.map": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/css/main.cf1dd58d.css.map",
+    "main.7755841f.js.map": "/A_ICONS/_Operator/Extrusion/Macchi1/Pages/static/js/main.7755841f.js.map"
   },
   "entrypoints": [
-    "static/css/main.9c868381.css",
-    "static/js/main.e2d16807.js"
+    "static/css/main.cf1dd58d.css",
+    "static/js/main.7755841f.js"
   ]
 }
