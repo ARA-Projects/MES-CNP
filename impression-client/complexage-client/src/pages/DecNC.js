@@ -54,26 +54,65 @@ const DecNC = ({ data }) => {
                                 <option value="" disabled>
                                     --Choisir une option--
                                 </option>
-                                <option value="Sur diamètre">
-                                    Sur diamètre
+                                <option value="Mauvaise impression">
+                                    Mauvaise impression
                                 </option>
-                                <option value="Ovalité">Ovalité</option>
-                                <option value="Manque diamètre">
-                                    Manque diamètre
+                                <option value="Décalage d'impression">
+                                    Décalage d'impression
                                 </option>
-                                <option value="Epaisseur max">
-                                    Epaisseur max
+                                <option value="Fantome sur impression">
+                                    Fantome sur impression
                                 </option>
-                                <option value="Epaisseur min">
-                                    Epaisseur min
+                                <option value="Mauvais alignement">
+                                    Mauvais alignement
                                 </option>
-                                <option value="Longueur NC">Longueur NC</option>
-                                <option value="Poids/mètre NC">
-                                    Poids/mètre NC
+                                <option value="Manque d'impression">
+                                    Manque d'impression
                                 </option>
-                                <option value="Défaut marquage">
-                                    Défaut marquage
+                                <option value="Mauvaise découpe">
+                                    Mauvaise découpe
                                 </option>
+                                <option value="Bulle d'aire">
+                                    Bulle d'aire
+                                </option>
+                                <option value="Nuance couleur">
+                                    Nuance couleur
+                                </option>
+                                <option value="MP non triaté">
+                                    MP non triaté
+                                </option>
+                                <option value="Manque complexage">
+                                    Manque complexage
+                                </option>
+                                <option value="Pli sur impression">
+                                    Pli sur impression
+                                </option>
+                                <option value="Aspect non conforme">
+                                    Aspect non conforme
+                                </option>
+                                <option value="Sens d'impression non conforme">
+                                    Sens d'impression non conforme
+                                </option>
+                                <option value="Poids hors tolérance">
+                                    Poids hors tolérance
+                                </option>
+                                <option value="Dimension non conforme">
+                                    Dimension non conforme
+                                </option>
+                                <option value="Coef de frottement non conforme">
+                                    Coef de frottement non conforme
+                                </option>
+                                <option value="Problème mandrin">
+                                    Problème mandrin
+                                </option>
+                                <option value="Bavure">Bavure</option>
+                                <option value="MP non conforme">
+                                    MP non conforme
+                                </option>
+                                <option value="Trace de choc">
+                                    Trace de choc
+                                </option>
+                                <option value="Curling">Curling</option>
                             </select>
                             <button
                                 className="valider"

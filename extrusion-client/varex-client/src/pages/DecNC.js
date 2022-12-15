@@ -54,26 +54,64 @@ const DecNC = ({ data }) => {
                                 <option value="" disabled>
                                     --Choisir une option--
                                 </option>
-                                <option value="Sur diamètre">
-                                    Sur diamètre
+                                <option value="Poids hors tolérance">
+                                    Poids hors tolérance
                                 </option>
-                                <option value="Ovalité">Ovalité</option>
-                                <option value="Manque diamètre">
-                                    Manque diamètre
+                                <option value="Mauvais alignements">
+                                    Mauvais alignements
                                 </option>
-                                <option value="Epaisseur max">
-                                    Epaisseur max
+                                <option value="Nuance couleur">
+                                    Nuance couleur
                                 </option>
-                                <option value="Epaisseur min">
-                                    Epaisseur min
+                                <option value="Problème mandrin">
+                                    Problème mandrin
                                 </option>
-                                <option value="Longueur NC">Longueur NC</option>
-                                <option value="Poids/mètre NC">
-                                    Poids/mètre NC
+                                <option value="Décalage soufflet">
+                                    Décalage soufflet
                                 </option>
-                                <option value="Défaut marquage">
-                                    Défaut marquage
+                                <option value="Aspect non conforme">
+                                    Aspect non conforme
                                 </option>
+                                <option value="Epaisseur non conforme">
+                                    Epaisseur non conforme
+                                </option>
+                                <option value="Tache noire">Tache noire</option>
+                                <option value="Largeur hors tolérance">
+                                    Largeur hors tolérance
+                                </option>
+                                <option value="Manque traitement">
+                                    Manque traitement
+                                </option>
+                                <option value="Manque de serrage">
+                                    Manque de serrage
+                                </option>
+                                <option value="Métrage hors tolérance">
+                                    Métrage hors tolérance
+                                </option>
+                                <option value="Caisse cassé">
+                                    Caisse cassé
+                                </option>
+                                <option value="Collage">Collage</option>
+                                <option value="Trace sur film">
+                                    Trace sur film
+                                </option>
+                                <option value="Trace de choc">
+                                    Trace de choc
+                                </option>
+                                <option value="Longueur hors tolérance">
+                                    Longueur hors tolérance
+                                </option>
+                                <option value="Manque impression">
+                                    Manque impression
+                                </option>
+                                <option value="Soudure non conforme">
+                                    Soudure non conforme
+                                </option>
+                                <option value="Présence des insects">
+                                    Présence des insects
+                                </option>
+                                <option value="Infondu">Infondu</option>
+                                <option value="Sac déchiré">Sac déchiré</option>
                             </select>
                             <button
                                 className="valider"
