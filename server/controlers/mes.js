@@ -342,6 +342,20 @@ const saveNonConforme = (req, res) => {
     }
 };
 
+const validerNC = (req, res) => {
+    try {
+        const { machine, datte } = req.params;
+        const QUERY = `UPDATE non_conf SET valide = 1 WHERE datte = ?`;
+        DATABASES[machine].query(QUERY, [datte], (error) => {
+            if (handleError(res, error)) {
+                res.json({ success });
+            }
+        });
+    } catch (err) {
+        res.json({ success: false, error: err.toString() });
+    }
+};
+
 const saveDechet = (req, res) => {
     try {
         const { machine } = req.params;
@@ -461,4 +475,5 @@ module.exports = {
     saveDechet,
     deleteDechet,
     saveNonConforme,
+    validerNC,
 };
