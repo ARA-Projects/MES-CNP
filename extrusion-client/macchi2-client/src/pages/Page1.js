@@ -12,6 +12,7 @@ import dechets from "../assets/dechets.png";
 import Sidebar from "../components/Sidebar";
 import Messages from "../components/Messages";
 import Alert from "../components/Alert";
+import AlertNC from "../components/AlertNC";
 var ok = 0;
 
 const Page1 = () => {
@@ -28,6 +29,7 @@ const Page1 = () => {
         tp: 0,
         arret: [],
         dechets: [],
+        non_conf: [],
     });
     let fetching = false;
 
@@ -204,6 +206,11 @@ const Page1 = () => {
                                     })}
                                     {data.dechets.map((dechets, i) => {
                                         return <Alert key={i} data={dechets} />;
+                                    })}
+                                    {data.non_conf.map((non_conf, i) => {
+                                        return (
+                                            <AlertNC key={i} data={non_conf} />
+                                        );
                                     })}
                                 </div>
                             </div>

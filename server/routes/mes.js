@@ -13,6 +13,7 @@ router.get("/historique/:machine", controlers.historique);
 router.put("/savearret/:machine/:datte", controlers.saveArret);
 router.post("/savedechet/:machine", controlers.saveDechet);
 router.put("/validerdechet/:machine/:datte", controlers.validerDechet);
+router.put("/validernc/:machine/:datte", controlers.validerNC);
 router.delete("/deletedechet/:machine/:datte", controlers.deleteDechet);
 router.post("/savenonconforme/:machine", controlers.saveNonConforme);
 module.exports = router;

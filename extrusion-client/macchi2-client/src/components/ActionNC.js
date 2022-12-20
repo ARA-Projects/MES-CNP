@@ -43,7 +43,7 @@ export default function Action({ display, data }) {
     const validerNC = async () => {
         if (newData.quantity && newData.motif) {
             const fetchedData = await fetchData(
-                "/mes/validernc/macchi1/" + data.datte,
+                "/mes/validernc/macchi2/" + data.datte,
                 "PUT",
                 newData
             );

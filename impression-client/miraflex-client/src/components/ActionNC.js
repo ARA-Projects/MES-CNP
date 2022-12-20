@@ -43,7 +43,7 @@ export default function Action({ display, data }) {
     const validerNC = async () => {
         if (newData.quantity && newData.motif) {
             const fetchedData = await fetchData(
-                "/mes/validernc/macchi1/" + data.datte,
+                "/mes/validernc/miraflex/" + data.datte,
                 "PUT",
                 newData
             );
@@ -100,46 +100,49 @@ export default function Action({ display, data }) {
                     <option value="" disabled>
                         --Choisir une option--
                     </option>
-                    <option value="Poids hors tolérance">
-                        Poids hors tolérance
+                    <option value="Mauvaise impression">
+                        Mauvaise impression
                     </option>
-                    <option value="Mauvais alignements">
-                        Mauvais alignements
+                    <option value="Décalage d'impression">
+                        Décalage d'impression
                     </option>
+                    <option value="Fantome sur impression">
+                        Fantome sur impression
+                    </option>
+                    <option value="Mauvais alignement">
+                        Mauvais alignement
+                    </option>
+                    <option value="Manque d'impression">
+                        Manque d'impression
+                    </option>
+                    <option value="Mauvaise découpe">Mauvaise découpe</option>
+                    <option value="Bulle d'aire">Bulle d'aire</option>
                     <option value="Nuance couleur">Nuance couleur</option>
-                    <option value="Problème mandrin">Problème mandrin</option>
-                    <option value="Décalage soufflet">Décalage soufflet</option>
+                    <option value="MP non triaté">MP non triaté</option>
+                    <option value="Manque complexage">Manque complexage</option>
+                    <option value="Pli sur impression">
+                        Pli sur impression
+                    </option>
                     <option value="Aspect non conforme">
                         Aspect non conforme
                     </option>
-                    <option value="Epaisseur non conforme">
-                        Epaisseur non conforme
+                    <option value="Sens d'impression non conforme">
+                        Sens d'impression non conforme
                     </option>
-                    <option value="Tache noire">Tache noire</option>
-                    <option value="Largeur hors tolérance">
-                        Largeur hors tolérance
+                    <option value="Poids hors tolérance">
+                        Poids hors tolérance
                     </option>
-                    <option value="Manque traitement">Manque traitement</option>
-                    <option value="Manque de serrage">Manque de serrage</option>
-                    <option value="Métrage hors tolérance">
-                        Métrage hors tolérance
+                    <option value="Dimension non conforme">
+                        Dimension non conforme
                     </option>
-                    <option value="Caisse cassé">Caisse cassé</option>
-                    <option value="Collage">Collage</option>
-                    <option value="Trace sur film">Trace sur film</option>
+                    <option value="Coef de frottement non conforme">
+                        Coef de frottement non conforme
+                    </option>
+                    <option value="Problème mandrin">Problème mandrin</option>
+                    <option value="Bavure">Bavure</option>
+                    <option value="MP non conforme">MP non conforme</option>
                     <option value="Trace de choc">Trace de choc</option>
-                    <option value="Longueur hors tolérance">
-                        Longueur hors tolérance
-                    </option>
-                    <option value="Manque impression">Manque impression</option>
-                    <option value="Soudure non conforme">
-                        Soudure non conforme
-                    </option>
-                    <option value="Présence des insects">
-                        Présence des insects
-                    </option>
-                    <option value="Infondu">Infondu</option>
-                    <option value="Sac déchiré">Sac déchiré</option>
+                    <option value="Curling">Curling</option>
                 </select>
                 <Button
                     variant="outlined"
