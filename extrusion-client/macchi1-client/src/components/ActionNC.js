@@ -17,7 +17,7 @@ export default function Action({ display, data }) {
     const [matricule, setMatricule] = useState("");
     const [newData, setNewData] = useState({
         quantity: data.quantite,
-        type: data.type,
+        motif: data.motif,
     });
     const login = async () => {
         const fetchedData = await fetchData(
@@ -41,9 +41,9 @@ export default function Action({ display, data }) {
         }
     };
     const validerNC = async () => {
-        if (newData.quantity && newData.type) {
+        if (newData.quantity && newData.motif) {
             const fetchedData = await fetchData(
-                "/mes/validerdechet/macchi1/" + data.datte,
+                "/mes/validernc/macchi1/" + data.datte,
                 "PUT",
                 newData
             );
@@ -92,7 +92,7 @@ export default function Action({ display, data }) {
                 <select
                     name="pannes"
                     id="pannes"
-                    value={newData.type}
+                    value={newData.motif}
                     onChange={(e) =>
                         setNewData({ ...newData, type: e.target.value })
                     }

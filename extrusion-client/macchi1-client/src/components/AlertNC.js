@@ -21,7 +21,7 @@ const AlertNC = ({ data }) => {
                     </div>
                     <hr />
                     <div className="page1-bottom page1-bottom-red">
-                        {data.quantite} Kg {data.type}
+                        {data.quantite} Kg {data.motif}
                     </div>
                 </div>
             </div>
