@@ -29,6 +29,7 @@ const Page1 = () => {
         tp: 0,
         arret: [],
         dechets: [],
+        non_conf: [],
     });
     let fetching = false;
 
