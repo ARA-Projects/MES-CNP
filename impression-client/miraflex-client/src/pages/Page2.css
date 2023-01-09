@@ -100,7 +100,21 @@ input {
     margin-inline: auto;
     text-align: center;
     background-color: aquamarine;
+    cursor: pointer;
 }
 .button_valider {
     opacity: 0;
+}
+
+#valider {
+    position: absolute;
+    top: 24.5%;
+    right: 10%;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    background-color: aquamarine;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
 }

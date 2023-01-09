@@ -55,7 +55,7 @@ let preData = {
     N_OF: "",
     designation: "-",
     qt_ob: 0,
-    qt_ob_unit: "METER",
+    qt_ob_unit: "KG",
     Epaisseur: 0,
     Laise: 0,
     vth: 0,
@@ -273,8 +273,10 @@ const Page2 = () => {
                                         }}
                                         input={<BootstrapInput />}
                                     >
-                                        <option value={"KG"}>Kg</option>
-                                        <option value={"METER"}>m</option>
+                                        <option defaultValue={"METER"}>
+                                            m
+                                        </option>
+                                        <option Value={"KG"}>Kg</option>
                                     </NativeSelect>
                                 </FormControl>
                             </div>
@@ -346,6 +348,9 @@ const Page2 = () => {
                                 </div>
                             </div>
                         </div>
+                        <button id="valider" type="submit">
+                            Valider
+                        </button>
                     </form>
                 </div>
             </div>
