@@ -131,7 +131,6 @@ const Page2 = () => {
                         }}
                         className="top-middle-down"
                     >
-                        <button className="button_valider">Valider</button>
                         <div className="top">
                             <div>
                                 <h2>Ordre de fabrication</h2>
@@ -314,6 +313,9 @@ const Page2 = () => {
                                 />
                             </div>
                         </div>
+                        <button id="valider" type="submit">
+                            Valider
+                        </button>
                     </form>
                 </div>
             </div>

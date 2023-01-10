@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { currentDate, currentTime, fetchData } from "../functions/functions";
 import "../pages/Page1.css";
-import cms from "../assets/cms.png";
+import decoupe from "../assets/decoupe.png";
 
 const Sidebar = () => {
     const navigate = useNavigate();
@@ -52,7 +52,7 @@ const Sidebar = () => {
     }, []);
     return (
         <div className="sidebar">
-            <img className="cms-img" src={cms} alt="cms" />
+            <img className="cms-img" src={decoupe} alt="cms" />
             <ul className="cms-list">
                 <div className="Time">
                     <li className="green">Time</li>
