@@ -313,7 +313,9 @@ const Page2 = () => {
                                 }}
                             />
                         </div>
-                        <button id="valider">Valider</button>
+                        <button type="submit" id="valider">
+                            Valider
+                        </button>
                     </form>
                 </div>
             </div>
