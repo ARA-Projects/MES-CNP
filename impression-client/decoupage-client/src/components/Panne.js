@@ -35,7 +35,9 @@ const Panne = ({ display, data }) => {
             >
                 <option value="Panne électrique">Panne électrique</option>
                 <option value="Panne mécanique">Panne mécanique</option>
-                <option value="Changement de série">Changement de série</option>
+                <option value="Changement de série">
+                    Changement d'article
+                </option>
                 <option value="Réglage">Réglage</option>
                 <option value="Nettoyage">Nettoyage</option>
                 <option value="Coupure utilité">Coupure utilité</option>
@@ -44,6 +46,12 @@ const Panne = ({ display, data }) => {
                 <option value="Maintenance préventive">
                     Maintenance préventive
                 </option>
+                <option value="Passage film">Passage film</option>
+                <option value="Alimentation bobine">Alimentation bobine</option>
+                <option value="Déchargement bobine finie">
+                    Déchargement bobine finie
+                </option>
+                <option value="Changement lame">Changement lame</option>
             </select>
             <button className="panne-valider" onClick={() => saveArret()}>
                 Valider
