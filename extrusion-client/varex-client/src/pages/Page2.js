@@ -139,6 +139,7 @@ const Page2 = () => {
                                                 N_OF: e.target.value,
                                             });
                                         }}
+                                        required
                                     />
                                 </div>
                             </div>
@@ -159,6 +160,7 @@ const Page2 = () => {
                                                 debit: e.target.value,
                                             })
                                         }
+                                        required
                                     />
                                 </div>
                             </div>
