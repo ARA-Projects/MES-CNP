@@ -23,11 +23,13 @@ const Login = () => {
             if (fetchedData.data.connected) {
                 navigate("/Page1");
             } else {
-                NotificationManager.error("Wrong login");
+                NotificationManager.error(
+                    "Matricule ou mot de passe incorrecte"
+                );
                 console.error(fetchedData.error);
             }
         } else {
-            NotificationManager.error("Enter your credentials");
+            console.log(fetchedData.error);
         }
     };
     const checkUser = async () => {
