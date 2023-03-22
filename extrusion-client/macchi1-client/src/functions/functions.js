@@ -49,7 +49,7 @@ export const fetchData = (url, method, body = {}) => {
                 };
             }
             const response = await fetch(
-                "http://localhost:5000" + url,
+                "http://192.168.0.204:5000" + url,
                 requestOptions
             );
             resolve(await response.json());
@@ -79,7 +79,7 @@ export const fetchPHP = (url, body = {}) => {
                 redirect: "follow",
             };
             const response = await fetch(
-                "http://localhost:8000" + url,
+                "http:/192.168.0.204:7681" + url,
                 requestOptions
             );
             resolve(await response.text());
