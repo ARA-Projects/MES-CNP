@@ -91,7 +91,6 @@ const List = ({ display, data, setData }) => {
                                                         await getLot(
                                                             e.target.value
                                                         );
-                                                    console.log(newLot);
                                                     setData(newData);
                                                     setLots(newLot);
                                                 }}
