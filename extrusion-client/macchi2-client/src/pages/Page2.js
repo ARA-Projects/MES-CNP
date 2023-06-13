@@ -1,9 +1,6 @@
 import "./Page2.css";
-import homepicrot from "../assets/homepicrot.png";
-import leave from "../assets/leave.png";
 import { Link, useNavigate } from "react-router-dom";
-import macchi2 from "../assets/macchi.png";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import List from "../components/List";
 import Sidebar from "../components/Sidebar";
 import { fetchPHP, fetchData } from "../functions/functions";
@@ -12,96 +9,96 @@ import {
     NotificationManager,
 } from "react-notifications";
 import "react-notifications/lib/notifications.css";
-
-let preData = {
-    N_OF: "",
-    debit: 0,
-};
-for (let i = 1; i <= 24; i++) {
-    preData["ref" + i] = "-";
-    preData["per" + i] = 0;
-    preData["lot" + i] = "-";
-}
+import homepicrot from "../assets/homepicrot.png";
+import macchi1 from "../assets/macchi.png";
+import leave from "../assets/leave.png";
 
 const Page2 = () => {
     const navigate = useNavigate();
-    const [data, setData] = useState(preData);
+    const [data, setData] = useState({
+        N_OF: "",
+        debit: 0,
+        ref: Array(24).fill("-"),
+        per: Array(24).fill(0),
+        lot: Array(24).fill("-"),
+    });
     const [showList, setShowList] = useState(false);
-    function display() {
-        setShowList(!showList);
-    }
+
+    const display = useCallback(() => {
+        setShowList((prevState) => !prevState);
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let doit = true;
-        for (const key in data) {
-            if (!data[key] && (key === "debit" || key === "N_OF")) {
-                doit = false;
-                break;
-            }
+        const isEmpty = Object.values(data).some((value) => !value);
+        if (isEmpty) {
+            NotificationManager.error("Error");
+            return;
         }
-        if (doit) {
-            let link =
-                "/A_ICONS/Operator/Extrusion/macchi2/Php_Pages/save_new_of.php";
-            let result = await fetchData(
-                "/mes/getof/macchi2/" + data.N_OF,
-                "GET"
-            );
-            if (result.success) {
-                if (result.data.exists) {
-                    link =
-                        "/A_ICONS/Operator/Extrusion/macchi2/Php_Pages/modify_of.php";
-                }
-                result = await fetchPHP(link, data);
-                if (result === "Success@") {
-                    NotificationManager.success("OF enregistré");
-                    navigate("/Page1");
-                } else {
-                    console.error(result);
-                    NotificationManager.error("Internal error");
-                }
+
+        const link = `/A_ICONS/Operator/Extrusion/macchi2/Php_Pages/${
+            data.N_OF ? "modify_of.php" : "save_new_of.php"
+        }`;
+
+        const result = await fetchData(
+            `/mes/getof/macchi2/${data.N_OF}`,
+            "GET"
+        );
+
+        if (result.success && result.data.exists) {
+            const modifiedData = { ...data };
+            delete modifiedData.id;
+            delete modifiedData.enprod;
+            delete modifiedData.pause;
+
+            for (let i = 1; i <= 24; i++) {
+                modifiedData[`ref${i}`] = modifiedData[`comp${i}`];
+                modifiedData[`per${i}`] = modifiedData[`p_comp${i}`];
+                delete modifiedData[`comp${i}`];
+                delete modifiedData[`p_comp${i}`];
+            }
+
+            const saveResult = await fetchPHP(link, modifiedData);
+
+            if (saveResult === "Success@") {
+                NotificationManager.success("OF enregistré");
+                navigate("/Page1");
             } else {
-                console.error(result.error);
+                console.error(saveResult);
                 NotificationManager.error("Internal error");
             }
         } else {
-            NotificationManager.error("Error");
+            console.error(result.error);
+            NotificationManager.error("Internal error");
         }
     };
+
     const getOF = async (value) => {
         if (value) {
             const result = await fetchData(
-                "/mes/getof/macchi2/" + value,
+                `/mes/getof/macchi2/${value}`,
                 "GET"
             );
-            if (result.success) {
-                if (result.data.exists) {
-                    let newData = result.data.data;
-                    for (const d in result.data.data) {
-                        if (d === "id") {
-                            delete newData.id;
-                            continue;
-                        } else if (d === "enprod") {
-                            delete newData.enprod;
-                            continue;
-                        } else if (d === "pause") {
-                            delete newData.pause;
-                            continue;
-                        } else if (d.substring(0, 4) === "comp") {
-                            newData[d.replace("comp", "ref")] = newData[d];
-                            delete newData[d];
-                        } else if (d.substring(0, 6) === "p_comp") {
-                            newData[d.replace("p_comp", "per")] = newData[d];
-                            delete newData[d];
-                        }
-                    }
-                    setData(newData);
+            if (result.success && result.data.exists) {
+                const { id, enprod, pause, ...newData } = result.data.data;
+
+                for (let i = 1; i <= 24; i++) {
+                    newData[`ref${i}`] = newData[`comp${i}`];
+                    newData[`per${i}`] = newData[`p_comp${i}`];
+                    delete newData[`comp${i}`];
+                    delete newData[`p_comp${i}`];
                 }
-            } else {
-                console.error(result.error);
-                NotificationContainer.error("Internal error");
+
+                setData(newData);
             }
         } else {
-            setData(preData);
+            setData({
+                N_OF: "",
+                debit: 0,
+                ref: Array(24).fill("-"),
+                per: Array(24).fill(0),
+                lot: Array(24).fill("-"),
+            });
         }
     };
     return (
@@ -116,17 +113,14 @@ const Page2 = () => {
                     <div className="title">
                         <h1>Résultat instantané - Macchi2</h1>
                     </div>
-                    <form
-                        className="top-down"
-                        onSubmit={(e) => handleSubmit(e)}
-                    >
+                    <form className="top-down" onSubmit={handleSubmit}>
                         <div className="top">
                             <div>
                                 <h2 className="of-header">
                                     Ordre de fabrication
                                 </h2>
                             </div>
-                            <div>
+                            <div id="upperInputs">
                                 <div>
                                     <input
                                         type="number"
@@ -137,11 +131,21 @@ const Page2 = () => {
                                         value={data.N_OF}
                                         onChange={(e) => {
                                             getOF(e.target.value);
-                                            setData({
-                                                ...data,
+                                            setData((prevData) => ({
+                                                ...prevData,
                                                 N_OF: e.target.value,
-                                            });
+                                            }));
                                         }}
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        className="nOf"
+                                        id="Numéro d'OF"
+                                        placeholder="Quantité Objectif"
+                                        min={0}
                                         required
                                     />
                                 </div>
@@ -158,10 +162,10 @@ const Page2 = () => {
                                         placeholder="Débit théorique (kg/h)"
                                         value={data.debit}
                                         onChange={(e) =>
-                                            setData({
-                                                ...data,
+                                            setData((prevData) => ({
+                                                ...prevData,
                                                 debit: e.target.value,
-                                            })
+                                            }))
                                         }
                                         required
                                     />
@@ -170,16 +174,13 @@ const Page2 = () => {
                             <div>
                                 <img
                                     className="machine"
-                                    src={macchi2}
-                                    alt="macchi2"
+                                    src={macchi1}
+                                    alt="macchi1"
                                 />
                             </div>
                             <div className="dropdown-list">
                                 <div>
-                                    <p
-                                        className="dropdown"
-                                        onClick={() => display()}
-                                    >
+                                    <p className="dropdown" onClick={display}>
                                         Recette
                                     </p>
                                 </div>

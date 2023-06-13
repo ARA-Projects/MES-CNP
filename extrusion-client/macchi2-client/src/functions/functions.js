@@ -1,8 +1,11 @@
+const ip = "localhost";
+//const ip = "192.168.0.204"
+
 export function currentTime() {
-    var date = new Date(
+    const date = new Date(
         new Date().toLocaleString("en-US", { timeZone: "Africa/Tunis" })
     );
-    var minutes = date.getMinutes();
+    const minutes = date.getMinutes();
     let current_time;
     if (minutes < 10) {
         current_time =
@@ -15,76 +18,65 @@ export function currentTime() {
     }
     return current_time;
 }
+
 export function currentDate() {
-    var date = new Date();
-    var current_date =
-        date.getFullYear() +
-        "-" +
-        (date.getMonth() + 1) +
-        "-" +
-        (date.getDate() < 10 ? "0" : "") +
-        date.getDate();
-    var date_time = current_date;
-    return date_time;
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const formattedMonth = month < 10 ? "0" + month : month;
+    const formattedDay = day < 10 ? "0" + day : day;
+    const current_date = `${year}-${formattedMonth}-${formattedDay}`;
+    return current_date;
 }
-export const fetchData = (url, method, body = {}) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            let requestOptions = {};
-            if (method === "GET" || method === "DELETE") {
-                requestOptions = {
-                    method: method,
-                    headers: myHeaders,
-                    redirect: "follow",
-                };
-            } else {
-                const raw = JSON.stringify(body);
-                requestOptions = {
-                    method: method,
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: "follow",
-                };
-            }
-            const response = await fetch(
-                "http://192.168.0.204:5000" + url,
-                requestOptions
-            );
-            resolve(await response.json());
-        } catch (err) {
-            resolve({ success: false, error: err });
+
+export const fetchData = async (url, method, body = {}) => {
+    try {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        let requestOptions = {
+            method,
+            headers: myHeaders,
+            redirect: "follow",
+        };
+
+        if (method !== "GET" && method !== "DELETE") {
+            const raw = JSON.stringify(body);
+            requestOptions.body = raw;
         }
-    });
+
+        const response = await fetch(`http://${ip}:5000${url}`, requestOptions);
+        return await response.json();
+    } catch (err) {
+        return { success: false, error: err };
+    }
 };
-export const fetchPHP = (url, body = {}) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let myHeaders = new Headers();
-            myHeaders.append(
-                "Content-Type",
-                "application/x-www-form-urlencoded; charset=UTF-8"
-            );
-            let requestOptions = {};
-            const raw = Object.entries(body)
-                .map(([k, v]) => {
-                    return k + "=" + v;
-                })
-                .join("&");
-            requestOptions = {
-                method: "POST",
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow",
-            };
-            const response = await fetch(
-                "http://192.168.0.204:7681" + url,
-                requestOptions
-            );
-            resolve(await response.text());
-        } catch (err) {
-            resolve({ success: false, error: err });
-        }
-    });
+
+export const fetchPHP = async (url, body = {}) => {
+    try {
+        const myHeaders = new Headers();
+        myHeaders.append(
+            "Content-Type",
+            "application/x-www-form-urlencoded; charset=UTF-8"
+        );
+
+        const raw = Object.entries(body)
+            .map(
+                ([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`
+            )
+            .join("&");
+
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+        };
+
+        const response = await fetch(`http://${ip}:7681${url}`, requestOptions);
+        return await response.text();
+    } catch (err) {
+        return { success: false, error: err };
+    }
 };
