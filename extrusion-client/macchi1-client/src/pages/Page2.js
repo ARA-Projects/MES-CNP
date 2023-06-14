@@ -31,36 +31,25 @@ const Page2 = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const isEmpty = Object.values(data).some((value) => !value);
-        if (isEmpty) {
-            NotificationManager.error("Error");
-            return;
-        }
-
-        const link = `/A_ICONS/Operator/Extrusion/macchi1/Php_Pages/${
-            data.N_OF ? "modify_of.php" : "save_new_of.php"
-        }`;
 
         const result = await fetchData(
             `/mes/getof/macchi1/${data.N_OF}`,
             "GET"
         );
 
-        if (result.success && result.data.exists) {
+        if (result.success) {
+
+            const link = `/A_ICONS/Operator/Extrusion/macchi1/Php_Pages/${
+                result.data.exists ? "modify_of.php" : "save_new_of.php"
+            }`;
+
             const modifiedData = { ...data };
             delete modifiedData.id;
             delete modifiedData.enprod;
             delete modifiedData.pause;
 
-            for (let i = 1; i <= 24; i++) {
-                modifiedData[`ref${i}`] = modifiedData[`comp${i}`];
-                modifiedData[`per${i}`] = modifiedData[`p_comp${i}`];
-                delete modifiedData[`comp${i}`];
-                delete modifiedData[`p_comp${i}`];
-            }
-
             const saveResult = await fetchPHP(link, modifiedData);
-
+            
             if (saveResult === "Success@") {
                 NotificationManager.success("OF enregistré");
                 navigate("/Page1");
@@ -69,7 +58,7 @@ const Page2 = () => {
                 NotificationManager.error("Internal error");
             }
         } else {
-            console.error(result.error);
+            console.error(result);
             NotificationManager.error("Internal error");
         }
     };

@@ -21,6 +21,7 @@ const Page2 = () => {
         ref: Array(24).fill("-"),
         per: Array(24).fill(0),
         lot: Array(24).fill("-"),
+        qo: 0
     });
     const [showList, setShowList] = useState(false);
 
@@ -42,18 +43,16 @@ const Page2 = () => {
 
         const result = await fetchData(`/mes/getof/varex/${data.N_OF}`, "GET");
 
-        if (result.success && result.data.exists) {
+        if (result.success) {
+
+            const link = `/A_ICONS/Operator/Extrusion/varex/Php_Pages/${
+                result.data.exists ? "modify_of.php" : "save_new_of.php"
+            }`;
+
             const modifiedData = { ...data };
             delete modifiedData.id;
             delete modifiedData.enprod;
             delete modifiedData.pause;
-
-            for (let i = 1; i <= 24; i++) {
-                modifiedData[`ref${i}`] = modifiedData[`comp${i}`];
-                modifiedData[`per${i}`] = modifiedData[`p_comp${i}`];
-                delete modifiedData[`comp${i}`];
-                delete modifiedData[`p_comp${i}`];
-            }
 
             const saveResult = await fetchPHP(link, modifiedData);
 
@@ -141,6 +140,8 @@ const Page2 = () => {
                                         placeholder="Quantité Objectif"
                                         min={0}
                                         required
+                                        value={data.qo}
+                                        onChange={(e) => setData(e.target.value)}
                                     />
                                 </div>
                             </div>

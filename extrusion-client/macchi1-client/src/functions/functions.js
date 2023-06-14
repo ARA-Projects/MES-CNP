@@ -1,5 +1,5 @@
-const ip = "localhost";
-//const ip = "192.168.0.204"
+//const ip = "localhost";
+const ip = "192.168.0.204"
 
 export function currentTime() {
     const date = new Date(
