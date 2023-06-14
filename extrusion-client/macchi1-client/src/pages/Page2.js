@@ -21,6 +21,7 @@ const Page2 = () => {
         ref: Array(24).fill("-"),
         per: Array(24).fill(0),
         lot: Array(24).fill("-"),
+        qo: 0
     });
     const [showList, setShowList] = useState(false);
 
@@ -146,6 +147,8 @@ const Page2 = () => {
                                         id="Numéro d'OF"
                                         placeholder="Quantité Objectif"
                                         min={0}
+                                        value={data.qo}
+                                        onChange={(e) => setData({...data, qo: e.target.value})}
                                         required
                                     />
                                 </div>
