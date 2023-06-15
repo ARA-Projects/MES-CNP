@@ -31,15 +31,6 @@ const Page2 = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const isEmpty = Object.values(data).some((value) => !value);
-        if (isEmpty) {
-            NotificationManager.error("Error");
-            return;
-        }
-
-        const link = `/A_ICONS/Operator/Extrusion/varex/Php_Pages/${
-            data.N_OF ? "modify_of.php" : "save_new_of.php"
-        }`;
 
         const result = await fetchData(`/mes/getof/varex/${data.N_OF}`, "GET");
 
@@ -53,6 +44,8 @@ const Page2 = () => {
             delete modifiedData.id;
             delete modifiedData.enprod;
             delete modifiedData.pause;
+
+            console.log(data);
 
             const saveResult = await fetchPHP(link, modifiedData);
 
@@ -141,7 +134,7 @@ const Page2 = () => {
                                         min={0}
                                         required
                                         value={data.qo}
-                                        onChange={(e) => setData(e.target.value)}
+                                        onChange={(e) => setData({...data, qo: e.target.value})}
                                     />
                                 </div>
                             </div>

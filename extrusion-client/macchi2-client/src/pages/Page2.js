@@ -31,15 +31,6 @@ const Page2 = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const isEmpty = Object.values(data).some((value) => !value);
-        if (isEmpty) {
-            NotificationManager.error("Error");
-            return;
-        }
-
-        const link = `/A_ICONS/Operator/Extrusion/macchi2/Php_Pages/${
-            data.N_OF ? "modify_of.php" : "save_new_of.php"
-        }`;
 
         const result = await fetchData(
             `/mes/getof/macchi2/${data.N_OF}`,
