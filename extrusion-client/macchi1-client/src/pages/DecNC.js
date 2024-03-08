@@ -11,7 +11,7 @@ import {
 } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 
-const DecNC = ({ data }) => {
+const DecNC = () => {
     const navigate = useNavigate();
     const [motif, setMotif] = useState("");
     const [quantite, setQuantite] = useState("");
@@ -56,7 +56,7 @@ const DecNC = ({ data }) => {
                                 name="pannes"
                                 id="pannes"
                                 onChange={(e) => setMotif(e.target.value)}
-                                defaultValue={""}
+                                reauired
                             >
                                 <option value="" disabled>
                                     --Choisir une option--
