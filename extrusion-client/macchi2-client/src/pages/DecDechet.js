@@ -11,7 +11,7 @@ import {
 } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 
-const DecDechet = ({ data }) => {
+const DecDechet = () => {
     const navigate = useNavigate();
     const [type, setType] = useState("");
     const [quantite, setQuantite] = useState("");
@@ -59,7 +59,7 @@ const DecDechet = ({ data }) => {
                                 name="pannes"
                                 id="pannes"
                                 onChange={(e) => setType(e.target.value)}
-                                defaultValue={""}
+                                reauired
                             >
                                 <option value="" disabled>
                                     --Choisir une option--
