@@ -32,6 +32,7 @@ const Panne = ({ display, data }) => {
                 name="pannes"
                 id="pannes"
                 onChange={(e) => setCause(e.target.value)}
+                required
             >
                 <option value="Panne électrique">Panne électrique</option>
                 <option value="Panne mécanique">Panne mécanique</option>
