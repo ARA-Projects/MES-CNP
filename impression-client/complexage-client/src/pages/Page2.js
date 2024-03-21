@@ -178,7 +178,7 @@ const Page2 = () => {
                                         type="number"
                                         className="qte-obj"
                                         id="Numéro d'OF"
-                                        min={0}
+                                        min={1}
                                         value={data.qt_ob}
                                         onChange={(e) => {
                                             setData({

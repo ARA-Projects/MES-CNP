@@ -21,7 +21,7 @@ const Page2 = () => {
         ref: Array(24).fill("-"),
         per: Array(24).fill(0),
         lot: Array(24).fill("-"),
-        qo: 0
+        qo: 0,
     });
     const [showList, setShowList] = useState(false);
 
@@ -38,7 +38,6 @@ const Page2 = () => {
         );
 
         if (result.success) {
-
             const link = `/A_ICONS/Operator/Extrusion/macchi1/Php_Pages/${
                 result.data.exists ? "modify_of.php" : "save_new_of.php"
             }`;
@@ -49,7 +48,7 @@ const Page2 = () => {
             delete modifiedData.pause;
 
             const saveResult = await fetchPHP(link, modifiedData);
-            
+
             if (saveResult === "Success@") {
                 NotificationManager.success("OF enregistré");
                 navigate("/Page1");
@@ -135,9 +134,14 @@ const Page2 = () => {
                                         className="nOf"
                                         id="Numéro d'OF"
                                         placeholder="Quantité Objectif"
-                                        min={0}
+                                        min={1}
                                         value={data.qo}
-                                        onChange={(e) => setData({...data, qo: e.target.value})}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                qo: e.target.value,
+                                            })
+                                        }
                                         required
                                     />
                                 </div>
@@ -146,7 +150,9 @@ const Page2 = () => {
                         <div className="down">
                             <div>
                                 <div>
-                                    <label className="dt">Débit th</label>
+                                    <label className="dt" htmlFor="debit">
+                                        Débit th
+                                    </label>
                                     <input
                                         className="nth-child-1"
                                         type="number"

@@ -30,7 +30,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
         fontSize: 16,
         padding: "10px 26px 10px 12px",
         transition: theme.transitions.create(["border-color", "box-shadow"]),
-        // Use the system font instead of the default Roboto font.
         fontFamily: [
             "-apple-system",
             "BlinkMacSystemFont",
@@ -129,8 +128,6 @@ const Page2 = () => {
                         }
                     }
                     setData(newData);
-                } else {
-                    //setData(preData);
                 }
             }
         }
@@ -248,7 +245,7 @@ const Page2 = () => {
                                     <input
                                         type="number"
                                         className="qte-obj"
-                                        min={0}
+                                        min={1}
                                         value={data.qt_ob}
                                         onChange={(e) => {
                                             setData({
